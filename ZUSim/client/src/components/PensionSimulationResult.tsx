@@ -1,15 +1,27 @@
-import { Paper, Typography, Box, LinearProgress } from '@mui/material';
+import { Paper, Typography, Box, LinearProgress, Button } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useState } from 'react';
 import { PensionResult } from './types';
 
 interface Props {
   result: PensionResult;
+  expectedPension?: number; // wartość z pierwszego inputu "oczekiwana emerytura"
 }
 
-export default function PensionSimulationResult({ result }: Props) {
+export default function PensionSimulationResult({ result, expectedPension }: Props) {
+  const [extraYears, setExtraYears] = useState(0);
+
+  // Symulacja wpływu odłożenia emerytury
+  const projectedNominal = result.nominalPension * Math.pow(1.05, extraYears); // założenie 5% wzrost składek/roku
+  const projectedReal = projectedNominal / Math.pow(1.03, extraYears); // urealnienie inflacją
+  const yearsNeeded = expectedPension && projectedNominal < expectedPension
+    ? Math.ceil(Math.log(expectedPension / projectedNominal) / Math.log(1.05))
+    : 0;
+
   const pensionData = [
     { name: 'Nominalna', value: result.nominalPension },
     { name: 'Urealniona', value: result.realPension },
+    { name: 'Prognozowana', value: projectedNominal },
   ];
 
   const salaryData = [
@@ -23,8 +35,8 @@ export default function PensionSimulationResult({ result }: Props) {
         Wynik symulacji
       </Typography>
 
-      {/* Słupki emerytur */}
-      <Typography variant="subtitle1" sx={{ mb: 1 }}>Emerytura (nominalna vs urealniona)</Typography>
+      {/* Wykres emerytur */}
+      <Typography variant="subtitle1" sx={{ mb: 1 }}>Emerytura (nominalna / urealniona / prognozowana)</Typography>
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={pensionData} margin={{ top: 10, bottom: 10 }}>
           <XAxis dataKey="name" />
@@ -35,8 +47,8 @@ export default function PensionSimulationResult({ result }: Props) {
         </BarChart>
       </ResponsiveContainer>
 
-      {/* Słupki wynagrodzenia */}
-      <Typography variant="subtitle1" sx={{ mt: 3, mb: 1 }}>Wynagrodzenie (z chorobami vs bez chorób)</Typography>
+      {/* Wykres wynagrodzenia */}
+      <Typography variant="subtitle1" sx={{ mt: 3, mb: 1 }}>Wynagrodzenie (z chorobami / bez chorób)</Typography>
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={salaryData} margin={{ top: 10, bottom: 10 }}>
           <XAxis dataKey="name" />
@@ -58,6 +70,28 @@ export default function PensionSimulationResult({ result }: Props) {
           />
         </Box>
         <Typography sx={{ minWidth: 50 }}>{(result.replacementRate * 100).toFixed(0)}%</Typography>
+      </Box>
+
+      {/* Interaktywny wpływ odłożenia emerytury */}
+      <Box sx={{ mt: 3, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+        {[0, 1, 2, 5].map((year) => (
+          <Button
+            key={year}
+            variant={extraYears === year ? 'contained' : 'outlined'}
+            onClick={() => setExtraYears(year)}
+          >
+            Odłóż o {year} {year === 1 ? 'rok' : 'lata'}
+          </Button>
+        ))}
+      </Box>
+
+      <Box sx={{ mt: 3 }}>
+        <Typography>Prognozowana emerytura po odłożeniu: {projectedNominal.toFixed(0)} zł (urealniona: {projectedReal.toFixed(0)} zł)</Typography>
+        {expectedPension && projectedNominal < expectedPension && (
+          <Typography color="error">
+            Aby osiągnąć oczekiwaną emeryturę ({expectedPension} zł), musisz pracować jeszcze około {yearsNeeded} lat.
+          </Typography>
+        )}
       </Box>
     </Paper>
   );
