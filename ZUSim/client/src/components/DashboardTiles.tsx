@@ -1,12 +1,7 @@
-import {
-  Box,
-  Paper,
-  Typography,
-  TextField,
-  SxProps,
-  Button,
-} from '@mui/material';
+import { Box, Paper, Typography, TextField, SxProps, Button } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import TableViewIcon from '@mui/icons-material/TableView';
 import { ExportPDFButton } from './ExportPDFButton';
 import { ExportXLSButton } from './ExportXLSButton';
 import { PensionResult } from './types';
@@ -43,7 +38,7 @@ export default function DashboardTiles({
   includeSickLeave,
   result,
 }: DashboardTilesProps) {
-  const [postalConfirmed, setPostalConfirmed] = useState(false); // stan zatwierdzenia kodu
+  const [postalConfirmed, setPostalConfirmed] = useState(false);
 
   const cardStyle: SxProps = {
     p: 3,
@@ -51,19 +46,58 @@ export default function DashboardTiles({
     borderRadius: 2,
     boxShadow: 3,
     transition: 'all 0.3s ease',
-    cursor: dashboardReady ? 'pointer' : 'not-allowed',
-    opacity: dashboardReady ? 1 : 0.5,
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 1,
     background: 'white',
     '&:hover': {
-      transform: dashboardReady ? 'translateY(-4px)' : 'none',
-      boxShadow: dashboardReady ? 6 : 3,
+      transform: 'translateY(-4px)',
+      boxShadow: 6,
     },
+    minHeight: '140px',
   };
 
   const postalCardStyle: SxProps = {
     ...cardStyle,
-    opacity: 1,
     cursor: 'default',
+    '&:hover': {
+      transform: 'none',
+      boxShadow: 3,
+    },
+  };
+
+  const handlePDFClick = () => {
+    if (!result) return;
+    ExportPDFButton({
+      age,
+      gender,
+      salary,
+      startYear,
+      endYear,
+      accountBalance,
+      subAccountBalance,
+      includeSickLeave,
+      result,
+    });
+  };
+
+  const handleXLSClick = () => {
+    if (!result) return;
+    ExportXLSButton({
+      age,
+      gender: gender as 'male' | 'female',
+      salary,
+      startYear,
+      endYear,
+      accountBalance,
+      subAccountBalance,
+      includeSickLeave,
+      result,
+      postalCode: postalConfirmed ? postalCode : 'Nie podano',
+    });
   };
 
   return (
@@ -72,69 +106,52 @@ export default function DashboardTiles({
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
         gap: 3,
-        maxWidth: '1100px',  // 🔹 ograniczenie szerokości
+        maxWidth: '1100px',
         mx: 'auto',
         mt: 4,
         position: 'relative',
       }}
     >
-      {/* 🔒 Overlay blokujący */}
       {!dashboardReady && (
         <Box
-          sx={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(255,255,255,0.6)',
-            backdropFilter: 'blur(4px)',
-            borderRadius: 2,
-            zIndex: 10,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            textAlign: 'center',
-            p: 2,
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{ color: 'rgb(0,65,110)', fontWeight: 700 }}
-          >
-            Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij
-            formularz emerytalny
-          </Typography>
+  sx={{
+    position: 'absolute',
+    top: '-20px',
+    left: '-20px',
+    right: '-20px',
+    bottom: '-20px',
+    background: 'rgba(255,255,255,0.6)',
+    backdropFilter: 'blur(6px)', // można też zwiększyć blur
+    WebkitBackdropFilter: 'blur(6px)',
+    borderRadius: 4, // jeśli chcesz łagodniejsze rogi
+    zIndex: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    p: 2,
+  }}
+>
+  <Typography
+    variant="h6"
+    sx={{ color: 'rgb(0,65,110)', fontWeight: 700 }}
+  >
+    Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij
+    formularz emerytalny
+  </Typography>
         </Box>
+
       )}
 
-      {/* 🧩 Tile 1: Open in Dashboard */}
-      <Paper sx={cardStyle}>
-        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
+      {/* Tile 1: Dashboard */}
+      <Paper sx={cardStyle} onClick={onGoToDashboard}>
+        <DashboardIcon sx={{ fontSize: 40, color: '#00416e' }} />
+        <Typography variant="subtitle1" sx={{ mt: 1, fontWeight: 700 }}>
           Otwórz w Dashboard
         </Typography>
-        <button
-          onClick={onGoToDashboard}
-          disabled={!dashboardReady}
-          style={{
-            backgroundColor: '#00416e',
-            color: '#fff',
-            padding: '10px 18px',
-            border: 'none',
-            borderRadius: '8px',
-            fontSize: '15px',
-            fontWeight: 600,
-            cursor: dashboardReady ? 'pointer' : 'not-allowed',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            justifyContent: 'center',
-            margin: '0 auto',
-          }}
-        >
-          <DashboardIcon />
-          Go
-        </button>
       </Paper>
 
-      {/* --- Tile 2: Postal Code --- */}
+      {/* Tile 2: Postal Code */}
       <Paper sx={postalCardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>
           Kod pocztowy
@@ -146,21 +163,14 @@ export default function DashboardTiles({
           value={postalCode}
           onChange={(e) => {
             setPostalCode(e.target.value);
-            setPostalConfirmed(false); // reset przy zmianie
+            setPostalConfirmed(false);
           }}
         />
-
         {!postalConfirmed && (
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ mt: 1 }}
-            onClick={() => setPostalConfirmed(true)}
-          >
+          <Button variant="contained" color="primary" sx={{ mt: 1 }} onClick={() => setPostalConfirmed(true)}>
             Zatwierdź
           </Button>
         )}
-
         {postalConfirmed && (
           <Typography variant="body2" sx={{ mt: 1, color: 'green' }}>
             Zatwierdzono ✅
@@ -168,46 +178,20 @@ export default function DashboardTiles({
         )}
       </Paper>
 
-      {/* 🧩 Tile 3: Download PDF */}
-      <Paper sx={cardStyle}>
-        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
+      {/* Tile 3: PDF */}
+      <Paper sx={cardStyle} onClick={handlePDFClick}>
+        <PictureAsPdfIcon sx={{ fontSize: 40, color: '#d32f2f' }} />
+        <Typography variant="subtitle1" sx={{ mt: 1, fontWeight: 700 }}>
           Pobierz PDF
         </Typography>
-        {result && (
-          <ExportPDFButton
-            age={age}
-            gender={gender}
-            salary={salary}
-            startYear={startYear}
-            endYear={endYear}
-            accountBalance={accountBalance}
-            subAccountBalance={subAccountBalance}
-            includeSickLeave={includeSickLeave}
-            result={result}
-          />
-        )}
       </Paper>
 
-      {/* --- Tile 4: Download XLS --- */}
-      <Paper sx={cardStyle}>
-        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
+      {/* Tile 4: XLS */}
+      <Paper sx={cardStyle} onClick={handleXLSClick}>
+        <TableViewIcon sx={{ fontSize: 40, color: '#1976d2' }} />
+        <Typography variant="subtitle1" sx={{ mt: 1, fontWeight: 700 }}>
           Pobierz XLS
         </Typography>
-
-        {result && (
-          <ExportXLSButton
-            age={age}
-            gender={gender as 'male' | 'female'}
-            salary={salary}
-            startYear={startYear}
-            endYear={endYear}
-            accountBalance={accountBalance}
-            subAccountBalance={subAccountBalance}
-            includeSickLeave={includeSickLeave}
-            result={result}
-            postalCode={postalConfirmed ? postalCode : 'Nie podano'}
-          />
-        )}
       </Paper>
     </Box>
   );
