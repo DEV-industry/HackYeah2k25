@@ -19,7 +19,7 @@ export default function ZUSHeader() {
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo and Brand */}
           <div className="flex items-center gap-8 flex-shrink-0">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 ">
               <img
                 src={LogoZus}
                 alt="ZUS - Zakład Ubezpieczeń Społecznych"

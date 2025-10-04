@@ -6,6 +6,7 @@ import RandomFactBanner from '@/components/RandomFactBanner';
 import PensionSimulationSection from '@/components/PensionSimulationSection';
 import { PensionGroup, PensionFact } from '@shared/schema';
 import ZUSHeader from '@/components/ZUSHeader';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [desiredPension, setDesiredPension] = useState('');
@@ -126,6 +127,7 @@ export default function Home() {
       >
         <RandomFactBanner facts={pensionFacts} />
         <PensionSimulationSection />
+        <Footer />
       </Box>
     </Box>
   );
