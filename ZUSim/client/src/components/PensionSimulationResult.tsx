@@ -19,14 +19,14 @@ export default function PensionSimulationResult({ result, expectedPension }: Pro
     : 0;
 
   const pensionData = [
-    { name: 'Nominalna', value: result.nominalPension },
-    { name: 'Urealniona', value: result.realPension },
-    { name: 'Prognozowana', value: projectedNominal },
+    { name: 'Nominalna', wartosc: result.nominalPension },
+    { name: 'Urealniona', wartosc: result.realPension },
+    { name: 'Prognozowana', wartosc: projectedNominal },
   ];
 
   const salaryData = [
-    { name: 'Z chorobami', value: result.salaryWithSickLeave },
-    { name: 'Bez chorób', value: result.salaryWithoutSickLeave },
+    { name: 'Z chorobami', wartosc: result.salaryWithSickLeave },
+    { name: 'Bez chorób', wartosc: result.salaryWithoutSickLeave },
   ];
 
   return (
@@ -43,7 +43,7 @@ export default function PensionSimulationResult({ result, expectedPension }: Pro
           <YAxis />
           <Tooltip formatter={(value: number) => value.toFixed(0) + ' zł'} />
           <Legend />
-          <Bar dataKey="value" fill="rgb(63,132,210)" barSize={40} />
+          <Bar dataKey="wartosc" fill="rgb(63,132,210)" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
 
@@ -55,7 +55,7 @@ export default function PensionSimulationResult({ result, expectedPension }: Pro
           <YAxis />
           <Tooltip formatter={(value: number) => value.toFixed(0) + ' zł'} />
           <Legend />
-          <Bar dataKey="value" fill="rgb(255,179,79)" barSize={40} />
+          <Bar dataKey="wartosc" fill="rgb(255,179,79)" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
 
@@ -80,19 +80,37 @@ export default function PensionSimulationResult({ result, expectedPension }: Pro
             variant={extraYears === year ? 'contained' : 'outlined'}
             onClick={() => setExtraYears(year)}
           >
-            Odłóż o {year} {year === 1 ? 'rok' : 'lata'}
+            Odłóż o {year} {year === 1 ? 'rok' : 'lat/a'}
           </Button>
         ))}
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Typography>Prognozowana emerytura po odłożeniu: {projectedNominal.toFixed(0)} zł (urealniona: {projectedReal.toFixed(0)} zł)</Typography>
-        {expectedPension && projectedNominal < expectedPension && (
-          <Typography color="error">
-            Aby osiągnąć oczekiwaną emeryturę ({expectedPension} zł), musisz pracować jeszcze około {yearsNeeded} lat.
-          </Typography>
-        )}
-      </Box>
+  <Typography sx={{ fontSize: "1.1rem" }}>
+    Prognozowana emerytura po odłożeniu:&nbsp;
+    <Typography component="span" sx={{ color: "primary.main", fontWeight: 700 }}>
+      {projectedNominal.toFixed(0)} zł
+    </Typography>
+    &nbsp;(urealniona:&nbsp;
+    <Typography component="span" sx={{ color: "secondary.main", fontWeight: 700 }}>
+      {projectedReal.toFixed(0)} zł
+    </Typography>
+    )
+  </Typography>
+
+  {expectedPension && projectedNominal < expectedPension && (
+    <Typography sx={{ mt: 1.5, color: "error.main", fontWeight: 600 }}>
+      Aby osiągnąć oczekiwaną emeryturę&nbsp;
+      <Typography component="span" sx={{ fontWeight: 700 }}>
+        ({expectedPension} zł)
+      </Typography>, musisz pracować jeszcze około&nbsp;
+      <Typography component="span" sx={{ fontWeight: 700 }}>
+        {yearsNeeded} lat
+      </Typography>.
+    </Typography>
+  )}
+</Box>
+
     </Paper>
   );
 }

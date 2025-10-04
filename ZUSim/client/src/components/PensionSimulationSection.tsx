@@ -19,15 +19,15 @@ import DashboardTiles from './DashboardTiles';
 
 export default function PensionSimulationSection() {
   // --- Stan formularza ---
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [salary, setSalary] = useState('');
-  const [startYear, setStartYear] = useState('');
-  const [endYear, setEndYear] = useState('');
-  const [accountBalance, setAccountBalance] = useState('');
-  const [subAccountBalance, setSubAccountBalance] = useState('');
-  const [includeSickLeave, setIncludeSickLeave] = useState(false);
-  const [postalCode, setPostalCode] = useState('');
+  const [age, setAge] = useState('21');
+  const [gender, setGender] = useState('male');
+  const [salary, setSalary] = useState('2300');
+  const [startYear, setStartYear] = useState('2023');
+  const [endYear, setEndYear] = useState('2076');
+  const [accountBalance, setAccountBalance] = useState('3200');
+  const [subAccountBalance, setSubAccountBalance] = useState('3100');
+  const [includeSickLeave, setIncludeSickLeave] = useState(true);
+  const [postalCode, setPostalCode] = useState('30-300');
 
   // --- Wynik i stan widoku ---
   const [result, setResult] = useState<PensionResult | null>(null);
