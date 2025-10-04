@@ -20,6 +20,13 @@ export default function DashboardTiles({ dashboardReady, postalCode, setPostalCo
     opacity: dashboardReady ? 1 : 0.5,
   };
 
+  const goToDashboard = () => {
+  if (dashboardReady) {
+    window.location.assign("/dashboard");
+  }
+};
+
+
   return (
     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', maxWidth: '1000px', margin: '0 auto', position: 'relative', mt: 4 }}>
       {!dashboardReady && (
@@ -54,12 +61,14 @@ export default function DashboardTiles({ dashboardReady, postalCode, setPostalCo
     <Paper sx={cardStyle}>
       <Typography variant="subtitle1" sx={{ mb: 2 }}>Open in Dashboard</Typography>
       <Button
-        variant="contained"
-        startIcon={<DashboardIcon />}
-        disabled={!dashboardReady}
-      >
-        Go
-      </Button>
+  variant="contained"
+  startIcon={<DashboardIcon />}
+  disabled={!dashboardReady}
+  onClick={goToDashboard}
+>
+  Go
+</Button>
+
     </Paper>
       {/* Tile 2: Postal Code */}
       <Paper sx={cardStyle}>
