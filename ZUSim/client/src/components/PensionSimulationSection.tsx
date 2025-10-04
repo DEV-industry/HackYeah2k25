@@ -15,6 +15,7 @@ import {
 import { PensionResult } from './types';
 import PensionSimulationResult from './PensionSimulationResult';
 import { ExportPDFButton } from './ExportPDFButton';
+import { ExportXLSButton } from './ExportXLSButton';
 
 export default function PensionSimulationSection() {
   // Formularz
@@ -181,17 +182,31 @@ export default function PensionSimulationSection() {
 
       {result && <PensionSimulationResult result={result} />}
       {result && (
-        <ExportPDFButton
-          age={parseInt(age)}
-          gender={gender}
-          salary={parseFloat(salary)}
-          startYear={parseInt(startYear)}
-          endYear={parseInt(endYear)}
-          accountBalance={parseFloat(accountBalance) || 0}
-          subAccountBalance={parseFloat(subAccountBalance) || 0}
-          includeSickLeave={includeSickLeave}
-          result={result}
-        />
+        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
+          <ExportPDFButton
+            age={parseInt(age)}
+            gender={gender}
+            salary={parseFloat(salary)}
+            startYear={parseInt(startYear)}
+            endYear={parseInt(endYear)}
+            accountBalance={parseFloat(accountBalance) || 0}
+            subAccountBalance={parseFloat(subAccountBalance) || 0}
+            includeSickLeave={includeSickLeave}
+            result={result}
+          />
+          <ExportXLSButton
+            age={parseInt(age)}
+            gender={gender as 'male' | 'female'}
+            salary={parseFloat(salary)}
+            startYear={parseInt(startYear)}
+            endYear={parseInt(endYear)}
+            accountBalance={parseFloat(accountBalance) || 0}
+            subAccountBalance={parseFloat(subAccountBalance) || 0}
+            includeSickLeave={includeSickLeave}
+            result={result}
+            postalCode="" // do uzupełnienia później
+          />
+        </Box>
       )}
     </Paper>
   );
