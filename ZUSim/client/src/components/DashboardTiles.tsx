@@ -4,8 +4,13 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TableViewIcon from '@mui/icons-material/TableView';
 import { ExportPDFButton } from './ExportPDFButton';
 import { ExportXLSButton } from './ExportXLSButton';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { PensionResult } from './types';
 import { useState } from 'react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { LayoutDashboard, FileText, Table, ExternalLink, Check } from "lucide-react";
 
 interface DashboardTilesProps {
   dashboardReady: boolean;
@@ -100,99 +105,121 @@ export default function DashboardTiles({
     });
   };
 
-  return (
-    <Box
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-        gap: 3,
-        maxWidth: '1100px',
-        mx: 'auto',
-        mt: 4,
-        position: 'relative',
-      }}
-    >
+return (
+    <div className="relative max-w-[1100px] mx-auto mt-8">
       {!dashboardReady && (
-        <Box
-  sx={{
-    position: 'absolute',
-    top: '-20px',
-    left: '-20px',
-    right: '-20px',
-    bottom: '-20px',
-    background: 'rgba(255,255,255,0.6)',
-    backdropFilter: 'blur(6px)', // można też zwiększyć blur
-    WebkitBackdropFilter: 'blur(6px)',
-    borderRadius: 4, // jeśli chcesz łagodniejsze rogi
-    zIndex: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    p: 2,
-  }}
->
-  <Typography
-    variant="h6"
-    sx={{ color: 'rgb(0,65,110)', fontWeight: 700 }}
-  >
-    Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij
-    formularz emerytalny
-  </Typography>
-        </Box>
-
+        <div className="absolute -inset-5 bg-background/80 backdrop-blur-md rounded-xl z-10 flex items-center justify-center p-6">
+          <p className="text-lg font-bold text-chart-1 text-center max-w-md">
+            Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij formularz emerytalny
+          </p>
+        </div>
       )}
 
-      {/* Tile 1: Dashboard */}
-      <Paper sx={cardStyle} onClick={onGoToDashboard}>
-        <DashboardIcon sx={{ fontSize: 40, color: '#00416e' }} />
-        <Typography variant="subtitle1" sx={{ mt: 1, fontWeight: 700 }}>
-          Otwórz w Dashboard
-        </Typography>
-      </Paper>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Dashboard Tile */}
+        <Card
+          className={`relative overflow-hidden border-2 transition-all duration-300 ${
+            dashboardReady
+              ? "hover-elevate active-elevate-2 cursor-pointer hover:shadow-lg "
+              : "cursor-not-allowed opacity-60 border-border"
+          }`}
+          onClick={dashboardReady ? onGoToDashboard : undefined}
+          data-testid="card-dashboard"
+        >
+          <div
+            className="absolute inset-0 opacity-10 bg-cover bg-center"
+            style={{
+              backgroundImage:
+                'url(https://images.unsplash.com/photo-1670141545540-7ffd026a6c74?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDd8fGF1dHVtbiUyMGxlYXZlc3xlbnwwfHwwfHx8MA%3D%3D)',
+            }}
+          />
+          <CardContent className="relative p-6 flex flex-col items-center justify-center min-h-[140px] gap-3">
+            <div className="flex items-center gap-2">
+              <LayoutDashboard className="h-8 w-8 " />
+              <span className="text-lg font-bold ">
+                Otwórz w Dashboard
+              </span>
+              <ExternalLink className="h-5 w-5 " />
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Tile 2: Postal Code */}
-      <Paper sx={postalCardStyle}>
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>
-          Kod pocztowy
-        </Typography>
-        <TextField
-          label="Nieobligatoryjne"
-          variant="outlined"
-          fullWidth
-          value={postalCode}
-          onChange={(e) => {
-            setPostalCode(e.target.value);
-            setPostalConfirmed(false);
-          }}
-        />
-        {!postalConfirmed && (
-          <Button variant="contained" color="primary" sx={{ mt: 1 }} onClick={() => setPostalConfirmed(true)}>
-            Zatwierdź
-          </Button>
-        )}
-        {postalConfirmed && (
-          <Typography variant="body2" sx={{ mt: 1, color: 'green' }}>
-            Zatwierdzono ✅
-          </Typography>
-        )}
-      </Paper>
+        {/* Postal Code Tile */}
+        <Card
+          className="border-2 border-border bg-card/50 backdrop-blur-sm"
+          data-testid="card-postal"
+        >
+          <CardContent className="p-6 flex flex-col items-center justify-center min-h-[140px] gap-3">
+            <Label className="text-lg font-bold text-foreground">
+              Kod pocztowy
+            </Label>
+            <div className="flex gap-2 items-center w-full">
+              <Input
+                placeholder="Nieobligatoryjne"
+                value={postalCode}
+                onChange={(e) => {
+                  setPostalCode(e.target.value);
+                  setPostalConfirmed(false);
+                }}
+                className="flex-1 bg-background/50"
+                data-testid="input-postal-code"
+              />
+              {!postalConfirmed && (
+                <Button
+                  onClick={() => setPostalConfirmed(true)}
+                  className="bg-chart-2 hover:bg-chart-2 text-white whitespace-nowrap px-4"
+                  data-testid="button-confirm-postal"
+                >
+                  Zatwierdź
+                </Button>
+              )}
+            </div>
+            {postalConfirmed && (
+              <div className="flex items-center gap-2 text-chart-2">
+                <span className="text-sm font-medium">Zatwierdzono</span>
+                <Check className="h-4 w-4" />
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
-      {/* Tile 3: PDF */}
-      <Paper sx={cardStyle} onClick={handlePDFClick}>
-        <PictureAsPdfIcon sx={{ fontSize: 40, color: '#d32f2f' }} />
-        <Typography variant="subtitle1" sx={{ mt: 1, fontWeight: 700 }}>
-          Pobierz PDF
-        </Typography>
-      </Paper>
+        {/* PDF Tile */}
+        <Card
+          className={`border-2 transition-all duration-300 ${
+            result
+              ? "hover-elevate active-elevate-2 cursor-pointer hover:shadow-lg border-destructive/20"
+              : "cursor-not-allowed opacity-60 border-border"
+          }`}
+          onClick={result ? handlePDFClick : undefined}
+          data-testid="card-pdf"
+        >
+          <CardContent className="p-6 flex flex-col items-center justify-center min-h-[140px] gap-3">
+            <FileText className="h-10 w-10 text-destructive" />
+            <span className="text-lg font-bold text-foreground">
+              Pobierz PDF
+            </span>
+          </CardContent>
+        </Card>
 
-      {/* Tile 4: XLS */}
-      <Paper sx={cardStyle} onClick={handleXLSClick}>
-        <TableViewIcon sx={{ fontSize: 40, color: '#1976d2' }} />
-        <Typography variant="subtitle1" sx={{ mt: 1, fontWeight: 700 }}>
-          Pobierz XLS
-        </Typography>
-      </Paper>
-    </Box>
+        {/* XLS Tile */}
+        <Card
+          className={`border-2 transition-all duration-300 ${
+            result
+              ? "hover-elevate active-elevate-2 cursor-pointer hover:shadow-lg border-chart-1/20"
+              : "cursor-not-allowed opacity-60 border-border"
+          }`}
+          onClick={result ? handleXLSClick : undefined}
+          data-testid="card-xls"
+        >
+          <CardContent className="p-6 flex flex-col items-center justify-center min-h-[140px] gap-3">
+            <Table className="h-10 w-10 text-chart-1" />
+            <span className="text-lg font-bold text-foreground">
+              Pobierz XLS
+            </span>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
+
