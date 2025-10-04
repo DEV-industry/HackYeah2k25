@@ -1,6 +1,6 @@
 import {
   ChevronDown,
-  Volume2,
+  EarOff,
   Accessibility,
   Search,
   ChevronRight,
@@ -57,14 +57,26 @@ export default function ZUSHeader() {
               size="icon"
               className="bg-blue-600 hover:bg-blue-700 border-0 flex items-center justify-center"
               data-testid="button-audio-assist"
+              onClick={() =>
+                window.open(
+                  'https://www.zus.pl/o-zus/kontakt/obsluga-osob-z-niepelnosprawnosciami/informacje-dla-osob-nieslyszacych',
+                  '_blank'
+                )
+              }
             >
-              <Volume2 className="h-4 w-4" stroke="white" />
+              <EarOff className="h-4 w-4" stroke="white" />
             </Button>
 
             <Button
               size="icon"
               className="bg-blue-600 hover:bg-blue-700 border-0 flex items-center justify-center"
               data-testid="button-accessibility"
+              onClick={() =>
+                window.open(
+                  'https://www.zus.pl/o-zus/kontakt/obsluga-osob-z-niepelnosprawnosciami',
+                  '_blank'
+                )
+              }
             >
               <Accessibility className="h-4 w-4" stroke="white" />
             </Button>
@@ -75,7 +87,7 @@ export default function ZUSHeader() {
               size="sm"
               className="hidden sm:flex px-2 text-foreground"
               data-testid="button-ibip"
-              onClick={() => window.open('https://bip.zus.pl/', '_blank')} // otwiera w nowej karcie
+              onClick={() => window.open('https://bip.zus.pl/', '_blank')}
             >
               <span className="text-xs font-bold bg-red-600 text-white px-1.5 py-0.5 rounded">
                 i
