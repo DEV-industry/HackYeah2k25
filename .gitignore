@@ -5,3 +5,10 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# backend
+ZUSim-backend/bin/
+ZUSim-backend/obj/
+ZUSim-backend/.vs/
+ZUSim-backend/appsettings.Development.json
+ZUSim-backend/appsettings.Local.json
