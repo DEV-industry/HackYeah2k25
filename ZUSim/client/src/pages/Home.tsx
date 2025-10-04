@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import PensionInputSection from '@/components/PensionInputSection';
 import PensionDistributionChart from '@/components/PensionDistributionChart';
 import RandomFactBanner from '@/components/RandomFactBanner';
+import PensionSimulationSection from '@/components/PensionSimulationSection';
 import { PensionGroup, PensionFact } from '@shared/schema';
 
 export default function Home() {
@@ -68,32 +69,57 @@ export default function Home() {
   const averagePension = 3200;
 
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        maxHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        bgcolor: 'white'
-      }}
-      data-testid="page-home"
-    >
-      <Box sx={{ height: '40vh', minHeight: '250px' }}>
-        <PensionInputSection
-          desiredPension={desiredPension}
-          onDesiredPensionChange={setDesiredPension}
-          averagePension={averagePension}
-        />
-      </Box>
+        <Box
+  sx={{
+    display: 'flex',
+    flexDirection: { xs: 'column', md: 'column' }, // domyślnie kolumna na małych ekranach
+    minHeight: '100vh',
+    bgcolor: 'white',
+  }}
+  data-testid="page-home"
+>
+  {/* Input Section */}
+  <Box
+    sx={{
+      height: { xs: 'auto', md: '40vh' },
+      minHeight: { xs: '200px', md: '250px' },
+      p: 2,
+    }}
+  >
+    <PensionInputSection
+      desiredPension={desiredPension}
+      onDesiredPensionChange={setDesiredPension}
+      averagePension={averagePension}
+    />
+  </Box>
 
-      <Box sx={{ height: '50vh', minHeight: '300px', bgcolor: 'rgb(250, 250, 250)' }}>
-        <PensionDistributionChart groups={pensionGroups} />
-      </Box>
+  {/* Distribution Chart */}
+  <Box
+    sx={{
+      height: { xs: 'auto', md: '50vh' },
+      minHeight: { xs: '250px', md: '300px' },
+      bgcolor: 'rgb(250, 250, 250)',
+      p: 2,
+      mt: 2,
+    }}
+  >
+    <PensionDistributionChart groups={pensionGroups} />
+  </Box>
 
-      <Box sx={{ height: '10vh', minHeight: '80px' }}>
-        <RandomFactBanner facts={pensionFacts} />
-      </Box>
-    </Box>
+  {/* Random Fact Banner */}
+  <Box
+    sx={{
+      height: { xs: 'auto', md: '10vh' },
+      minHeight: { xs: '70px', md: '80px' },
+      p: 2,
+      mt: 2,
+    }}
+  >
+    <RandomFactBanner facts={pensionFacts} />
+    <PensionSimulationSection />
+  </Box>
+</Box>
+
+
   );
 }
