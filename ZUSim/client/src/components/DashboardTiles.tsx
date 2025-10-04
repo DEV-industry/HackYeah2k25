@@ -149,7 +149,6 @@ export default function DashboardTiles({
         )}
       </Paper>
 
-      {/* --- Tile 4: Download XLS --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>
           Download XLS
