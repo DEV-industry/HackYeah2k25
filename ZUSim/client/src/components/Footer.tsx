@@ -46,7 +46,7 @@ function Footer({
 
   return (
     <footer
-      className="bg-[rgb(0,153,63)] text-primary-foreground"
+      className="bg-[rgb(0,153,63)] text-primary-foreground max-w-full"
       data-testid="footer-main"
     >
       <div className="container mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-16">
