@@ -107,11 +107,11 @@ function Footer({
           </div>
 
           {/* Right Column - Back to Top */}
-          <div className="flex justify-end">
+          <div className="flex justify-end h-0">
             <Button
               variant="outline"
               onClick={scrollToTop}
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[rgb(0,153,63)] px-6 py-2.5 rounded-lg transition-all duration-200"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[rgb(0,153,63)] px-2 py-1.5 rounded-lg transition-all duration-200"
               data-testid="button-back-to-top"
             >
               {backToTopLabel}
@@ -167,7 +167,7 @@ function Footer({
                   className="flex flex-col items-center gap-1 hover:opacity-80 transition-opacity duration-200"
                   data-testid={`link-footer-social-tablet-${index}`}
                 >
-                  <div className="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center text-xs font-semibold">
+                  <div className="w-9 h-9 rounded-full bg-white text-[rgb(0,153,63)] flex items-center justify-center text-xs font-semibold">
                     {social.icon}
                   </div>
                   <span className="text-xs">{social.label}</span>
@@ -180,7 +180,7 @@ function Footer({
               <Button
                 variant="outline"
                 onClick={scrollToTop}
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary px-6 py-2.5 rounded-lg transition-all duration-200"
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[rgb(0,153,63)] px-6 py-2.5 rounded-lg transition-all duration-200"
                 data-testid="button-back-to-top-tablet"
               >
                 {backToTopLabel}
@@ -235,7 +235,7 @@ function Footer({
                 className="flex flex-col items-center gap-1 hover:opacity-80 transition-opacity duration-200"
                 data-testid={`link-footer-social-mobile-${index}`}
               >
-                <div className="w-10 h-10 rounded-full bg-white text-primary flex items-center justify-center text-xs font-semibold">
+                <div className="w-10 h-10 rounded-full bg-white text-[rgb(0,153,63)] flex items-center justify-center text-xs font-semibold">
                   {social.icon}
                 </div>
                 <span className="text-xs">{social.label}</span>
@@ -244,17 +244,15 @@ function Footer({
           </div>
 
           {/* Back to Top */}
-          <div className="flex justify-center">
-            <Button
-              variant="outline"
-              onClick={scrollToTop}
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary px-6 py-2.5 rounded-lg transition-all duration-200 w-full max-w-xs"
-              data-testid="button-back-to-top-mobile"
-            >
-              {backToTopLabel}
-              <ChevronUp className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            onClick={scrollToTop}
+            className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[rgb(0,153,63)] rounded-lg transition-all duration-200 flex items-center justify-center gap-1"
+            data-testid="button-back-to-top"
+          >
+            {backToTopLabel}
+            <ChevronUp className="h-3 w-3" />
+          </Button>
         </div>
       </div>
     </footer>
