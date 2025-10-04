@@ -84,26 +84,45 @@ export default function Home() {
       <Box
         sx={{
           width: '100%',
-          maxWidth: '1000px', // <= ograniczenie szerokości
+          maxWidth: '1100px', // <= ograniczenie szerokości
           mx: 'auto', // wyśrodkowanie
           px: 2, // wewnętrzne odstępy po bokach
           flex: 1, // wypełnia przestrzeń
         }}
       >
         {/* Input Section */}
-        <Box
-          sx={{
-            height: { xs: 'auto', md: '40vh' },
-            minHeight: { xs: '200px', md: '250px' },
-            my: 2,
-          }}
-        >
-          <PensionInputSection
-            desiredPension={desiredPension}
-            onDesiredPensionChange={setDesiredPension}
-            averagePension={averagePension}
-          />
-        </Box>
+<Box
+  sx={{
+    height: { xs: 'auto', md: '40vh' },
+    minHeight: { xs: '200px', md: '250px' },
+    my: 2,
+    borderRadius: 2,
+    backgroundImage: 'url("https://images.unsplash.com/photo-1574376407492-c3cf78231def?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  <Box
+    sx={{
+      width: '99%',
+      backdropFilter: 'blur(5px)',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      borderRadius: 2,
+      p: 3,
+    }}
+  >
+    <PensionInputSection
+      desiredPension={desiredPension}
+      onDesiredPensionChange={setDesiredPension}
+      averagePension={averagePension}
+    />
+  </Box>
+</Box>
+
 
         {/* Distribution Chart */}
         <Box
