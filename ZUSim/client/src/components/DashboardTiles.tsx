@@ -172,7 +172,6 @@ export default function DashboardTiles({
             subAccountBalance={subAccountBalance}
             includeSickLeave={includeSickLeave}
             result={result}
-            postalCode={postalCode} // 👈 zawsze aktualna wartość z inputa
           />
         )}
       </Paper>
