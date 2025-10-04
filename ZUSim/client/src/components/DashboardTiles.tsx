@@ -1,8 +1,16 @@
-import { Box, Paper, Typography, TextField, SxProps } from '@mui/material';
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  SxProps,
+  Button,
+} from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { ExportPDFButton } from './ExportPDFButton';
 import { ExportXLSButton } from './ExportXLSButton';
 import { PensionResult } from './types';
+import { useState } from 'react';
 
 interface DashboardTilesProps {
   dashboardReady: boolean;
@@ -35,6 +43,8 @@ export default function DashboardTiles({
   includeSickLeave,
   result,
 }: DashboardTilesProps) {
+  const [postalConfirmed, setPostalConfirmed] = useState(false); // stan zatwierdzenia kodu
+
   const cardStyle: SxProps = {
     p: 3,
     textAlign: 'center',
@@ -47,7 +57,11 @@ export default function DashboardTiles({
     opacity: dashboardReady ? 1 : 0.5,
   };
 
-
+  const postalCardStyle: SxProps = {
+    ...cardStyle,
+    opacity: 1,
+    cursor: 'default',
+  };
 
   return (
     <Box
@@ -113,20 +127,35 @@ export default function DashboardTiles({
       </Paper>
 
       {/* --- Tile 2: Postal Code --- */}
-      <Paper sx={cardStyle}>
-        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
+      <Paper sx={postalCardStyle}>
+        <Typography variant="subtitle1" sx={{ mb: 2 }}>
           Kod pocztowy
         </Typography>
         <TextField
-          label="Wpisz kod pocztowy (optional)"
+          label="Nieobligatoryjne"
           variant="outlined"
           fullWidth
           value={postalCode}
-          onChange={(e) => setPostalCode(e.target.value)} // 👈 aktualizacja na bieżąco
+          onChange={(e) => {
+            setPostalCode(e.target.value);
+            setPostalConfirmed(false); // reset przy zmianie
+          }}
         />
-        {postalCode && (
-          <Typography variant="body2" sx={{ mt: 1, color: 'gray' }}>
-            Wpisany: {postalCode}
+
+        {!postalConfirmed && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ mt: 1 }}
+            onClick={() => setPostalConfirmed(true)}
+          >
+            Zatwierdź
+          </Button>
+        )}
+
+        {postalConfirmed && (
+          <Typography variant="body2" sx={{ mt: 1, color: 'green' }}>
+            Zatwierdzono ✅
           </Typography>
         )}
       </Paper>
@@ -151,10 +180,12 @@ export default function DashboardTiles({
         )}
       </Paper>
 
+      {/* --- Tile 4: Download XLS --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>
           Download XLS
         </Typography>
+
         {result && (
           <ExportXLSButton
             age={age}
@@ -166,6 +197,7 @@ export default function DashboardTiles({
             subAccountBalance={subAccountBalance}
             includeSickLeave={includeSickLeave}
             result={result}
+            postalCode={postalConfirmed ? postalCode : 'Nie podano'}
           />
         )}
       </Paper>
