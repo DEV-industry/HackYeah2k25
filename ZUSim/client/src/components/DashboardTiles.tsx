@@ -11,6 +11,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LayoutDashboard, FileText, Table, ExternalLink, Check } from "lucide-react";
+import { generatePDF } from '@/hooks/generatePDF';
+import { generateXLS } from '@/hooks/generateXLS';
 
 interface DashboardTilesProps {
   dashboardReady: boolean;
@@ -190,7 +192,7 @@ return (
               ? "hover-elevate active-elevate-2 cursor-pointer hover:shadow-lg border-destructive/20"
               : "cursor-not-allowed opacity-60 border-border"
           }`}
-          onClick={result ? handlePDFClick : undefined}
+          onClick={result ? () => generatePDF({ age, gender, salary, startYear, endYear, accountBalance, subAccountBalance, includeSickLeave, result }) : undefined}
           data-testid="card-pdf"
         >
           <CardContent className="p-6 flex flex-col items-center justify-center min-h-[140px] gap-3">
@@ -208,7 +210,7 @@ return (
               ? "hover-elevate active-elevate-2 cursor-pointer hover:shadow-lg border-chart-1/20"
               : "cursor-not-allowed opacity-60 border-border"
           }`}
-          onClick={result ? handleXLSClick : undefined}
+            onClick={result ? () => generateXLS({ age, gender, salary, startYear, endYear, accountBalance, subAccountBalance, includeSickLeave, result, postalCode: postalConfirmed ? postalCode : 'Nie podano' }) : undefined}
           data-testid="card-xls"
         >
           <CardContent className="p-6 flex flex-col items-center justify-center min-h-[140px] gap-3">
