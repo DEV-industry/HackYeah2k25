@@ -110,7 +110,7 @@ export default function PensionSimulationSection() {
       })
     );
 
-    // setLocation(`/dashboard?data=${encodedData}`);
+    setLocation(`/dashboard?data=${encodedData}`);
   };
 
   // --- Widok komponentu ---
