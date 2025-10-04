@@ -34,7 +34,7 @@ export default function PensionDistributionChart({ groups }: PensionDistribution
         }}
       >
         {groups.map((group, index) => {
-          const heightPercentage = (group.amount / maxAmount) * 100;
+          const heightPercentage = (group.amount / maxAmount) * 120;
           
           return (
             <Tooltip
@@ -74,7 +74,7 @@ export default function PensionDistributionChart({ groups }: PensionDistribution
                 <Box
                   sx={{
                     width: '100%',
-                    height: `${heightPercentage}%`,
+                    height: `${heightPercentage}px`,
                     bgcolor: group.color,
                     borderRadius: '4px 4px 0 0',
                     minHeight: '40px',
