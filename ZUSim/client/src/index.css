@@ -202,6 +202,25 @@
   outline: none;
 }
 
+.zus-card-static {
+  border-radius: 1rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 65, 110, 0.08);
+}
+
+/* Karty z animacją hover */
+.zus-card-hover {
+  border-radius: 1rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 65, 110, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.zus-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 65, 110, 0.12);
+}
 
 
 .dark {

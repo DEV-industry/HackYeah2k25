@@ -2,14 +2,14 @@ import React from "react";
 
 export default function DashboardPage() {
   return (
-    <main className="min-h-screen  py-10 px-6 lg:px-12">
+    <main className="min-h-screen py-10 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6">
         {/* === LEWY PANEL (FORMULARZ) === */}
         <aside
           className="col-span-12 lg:col-span-3 flex flex-col gap-6"
           aria-labelledby="form-title"
         >
-          <div className="zus-card">
+          <div className="zus-card-static">
             <h2 id="form-title" className="zus-subheader mb-4">
               Parametry symulacji
             </h2>
@@ -83,7 +83,7 @@ export default function DashboardPage() {
             </form>
           </div>
 
-          <div className="zus-card">
+          <div className="zus-card-static">
             <h3 className="zus-subheader mb-3">Okresy chorobowe</h3>
             <p className="text-sm text-[var(--zus-navy)] mb-3">
               Wprowadź dane dla wybranych lat:
@@ -111,18 +111,18 @@ export default function DashboardPage() {
           className="col-span-12 lg:col-span-6 flex flex-col gap-6"
           aria-labelledby="results-title"
         >
-          <div className="zus-card">
+          <div className="zus-card-static">
             <h2 id="results-title" className="zus-subheader mb-4">
               Prognoza wysokości emerytury
             </h2>
-            <div className="h-72 bg-[var(--zus-gray)] rounded-md flex items-center justify-center text-[var(--zus-blue)] italic">
+            <div className="h-72 bg-[var(--zus-gray)] rounded-md flex items-center justify-center text-gray-600 italic">
               (Wykres: rzeczywista vs urealniona vs oczekiwana)
             </div>
           </div>
 
           {/* KARTY PODSUMOWANIA */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="zus-card text-center">
+            <div className="zus-card-hover text-center">
               <h4 className="text-sm text-[var(--zus-navy)] mb-1">
                 Prognozowana emerytura
               </h4>
@@ -130,7 +130,7 @@ export default function DashboardPage() {
                 4 200 zł
               </p>
             </div>
-            <div className="zus-card text-center">
+            <div className="zus-card-hover text-center">
               <h4 className="text-sm text-[var(--zus-navy)] mb-1">
                 Urealniona emerytura
               </h4>
@@ -138,13 +138,13 @@ export default function DashboardPage() {
                 3 600 zł
               </p>
             </div>
-            <div className="zus-card text-center">
+            <div className="zus-card-hover text-center">
               <h4 className="text-sm text-[var(--zus-navy)] mb-1">
                 Stopa zastąpienia
               </h4>
               <p className="text-2xl font-bold">54%</p>
             </div>
-            <div className="zus-card text-center">
+            <div className="zus-card-hover text-center">
               <h4 className="text-sm text-[var(--zus-navy)] mb-1">
                 Różnica względem oczekiwań
               </h4>
@@ -154,11 +154,11 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="zus-card">
+          <div className="zus-card-static">
             <h3 className="zus-subheader mb-3">
               Wzrost środków na koncie i subkoncie
             </h3>
-            <div className="h-64 bg-[var(--zus-gray)] rounded-md flex items-center justify-center text-[var(--zus-blue)] italic">
+            <div className="h-64 bg-[var(--zus-gray)] rounded-md flex items-center justify-center text-gray-600 italic">
               (Wykres akumulacji środków w czasie)
             </div>
           </div>
@@ -169,7 +169,7 @@ export default function DashboardPage() {
           className="col-span-12 lg:col-span-3 flex flex-col gap-6"
           aria-labelledby="scenario-title"
         >
-          <div className="zus-card">
+          <div className="zus-card-static">
             <h3 id="scenario-title" className="zus-subheader mb-3">
               Scenariusze
             </h3>
@@ -187,7 +187,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="zus-card">
+          <div className="zus-card-static">
             <h3 className="zus-subheader mb-3">
               Wskaźnik indeksacji wynagrodzeń
             </h3>

@@ -7,6 +7,8 @@ import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import DashboardPage from "@/pages/DashboardPage";
 import ZUSHeader from "./components/ZUSHeader";
+import { SimulationProvider } from "../src/context/SimulationContext";
+
 function Router() {
   return (
     <Switch>
@@ -20,11 +22,11 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ZUSHeader />
       <TooltipProvider>
-        {/* Globalny header/layout masz już w projekcie */}
-        <Toaster />
-        <Router />
+        <SimulationProvider>
+          <Toaster />
+          <Router />
+        </SimulationProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
