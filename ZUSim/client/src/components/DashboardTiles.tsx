@@ -23,21 +23,32 @@ export default function DashboardTiles({ dashboardReady, postalCode, setPostalCo
   return (
     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', maxWidth: '1000px', margin: '0 auto', position: 'relative', mt: 4 }}>
       {!dashboardReady && (
-        <Box sx={{
-          position: 'absolute',
-          inset: 0,
-          background: 'rgba(255,255,255,0.7)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 10,
-          borderRadius: 2,
-        }}>
-          <Typography variant="h6" sx={{ color: 'rgb(0,65,110)', fontWeight: 700, textAlign: 'center', px: 2 }}>
-            Please complete the pension form first to access dashboard options
-          </Typography>
-        </Box>
-      )}
+  <Box sx={{
+    position: 'absolute',
+    inset: 0,
+    background: 'rgba(255,255,255,0.5)', // półprzezroczyste tło
+    backdropFilter: 'blur(4px)',          // dodany blur
+    WebkitBackdropFilter: 'blur(4px)',   // dla Safari
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+    borderRadius: 2,
+  }}>
+    <Typography
+      variant="h6"
+      sx={{
+        color: 'rgb(0,65,110)',
+        fontWeight: 700,
+        textAlign: 'center',
+        px: 2
+      }}
+    >
+      Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij formularz emerytalny
+    </Typography>
+  </Box>
+)}
+
 
         {/* Tile 1: Open in Dashboard */}
     <Paper sx={cardStyle}>

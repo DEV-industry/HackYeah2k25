@@ -18,6 +18,7 @@ import DashboardTiles from "./DashboardTiles";
 import { useLocation } from "wouter";
 
 export default function PensionSimulationSection() {
+  // --- Stan formularza ---
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [salary, setSalary] = useState("");
@@ -26,11 +27,11 @@ export default function PensionSimulationSection() {
   const [accountBalance, setAccountBalance] = useState("");
   const [subAccountBalance, setSubAccountBalance] = useState("");
   const [includeSickLeave, setIncludeSickLeave] = useState(false);
-
-  const [result, setResult] = useState<PensionResult | null>(null);
-  const [dashboardReady, setDashboardReady] = useState(false);
   const [postalCode, setPostalCode] = useState("");
 
+  // --- Wynik i stan widoku ---
+  const [result, setResult] = useState<PensionResult | null>(null);
+  const [dashboardReady, setDashboardReady] = useState(false);
   const [, setLocation] = useLocation();
 
   const simulatePension = () => {
@@ -88,7 +89,7 @@ export default function PensionSimulationSection() {
     setResult(calculatedResult);
     setDashboardReady(true);
 
-    // === Przejście do dashboardu z przekazaniem danych ===
+    // --- Przekazanie danych do dashboardu przez URL ---
     const encodedData = encodeURIComponent(
       JSON.stringify({
         age,
