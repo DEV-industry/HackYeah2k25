@@ -120,7 +120,89 @@
   /* Fallback for older browsers */
   --destructive-border: hsl(var(--destructive));
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+    --zus-yellow: rgb(255, 179, 79);   
+  --zus-green: rgb(0, 153, 63);     
+  --zus-gray: rgb(226, 226, 226); 
+  --zus-blue: rgb(63, 132, 210);     
+  --zus-navy: rgb(0, 65, 110);      
+  --zus-red: rgb(240, 94, 94);       
+  --zus-black: rgb(0, 0, 0);         
+
+  --zus-card-bg: #fff;
+
+  --zus-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
+
+/* === ZUS Card Styling === */
+.zus-card {
+  border-radius: 1rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 65, 110, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.zus-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 65, 110, 0.12);
+}
+
+/* === CTA Buttons === */
+.zus-btn-primary {
+  background-color: var(--zus-blue);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.zus-btn-primary:hover {
+  background-color: #2c6bb3; /* ciemniejszy niebieski */
+  transform: translateY(-1px);
+}
+
+.zus-btn-secondary {
+  background-color: var(--zus-green);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.zus-btn-secondary:hover {
+  background-color: #007d35;
+  transform: translateY(-1px);
+}
+
+/* === Headers === */
+.zus-header {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--zus-navy);
+}
+.zus-subheader {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--zus-blue);
+}
+
+/* === Inputs === */
+.zus-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--zus-gray);
+  border-radius: 0.5rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+.zus-input:focus {
+  border-color: var(--zus-blue);
+  box-shadow: 0 0 0 3px rgba(63, 132, 210, 0.25);
+  outline: none;
+}
+
+
 
 .dark {
   --button-outline: rgba(255,255,255, .10);
