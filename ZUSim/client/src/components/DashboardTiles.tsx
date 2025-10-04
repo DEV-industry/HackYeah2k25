@@ -1,19 +1,23 @@
-import {
-  Box,
-  Paper,
-  Typography,
-  Button,
-  TextField,
-  SxProps,
-} from '@mui/material';
-import { PictureAsPdf, TableView } from '@mui/icons-material';
+import { Box, Paper, Typography, TextField, SxProps } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import { ExportPDFButton } from './ExportPDFButton';
+import { ExportXLSButton } from './ExportXLSButton';
+import { PensionResult } from './types';
 
 interface DashboardTilesProps {
   dashboardReady: boolean;
   postalCode: string;
   setPostalCode: (code: string) => void;
-  onGoToDashboard: () => void; // 👈 nowy prop
+  onGoToDashboard: () => void;
+  age: number;
+  gender: string;
+  salary: number;
+  startYear: number;
+  endYear: number;
+  accountBalance: number;
+  subAccountBalance: number;
+  includeSickLeave: boolean;
+  result: PensionResult | null;
 }
 
 export default function DashboardTiles({
@@ -21,6 +25,15 @@ export default function DashboardTiles({
   postalCode,
   setPostalCode,
   onGoToDashboard,
+  age,
+  gender,
+  salary,
+  startYear,
+  endYear,
+  accountBalance,
+  subAccountBalance,
+  includeSickLeave,
+  result,
 }: DashboardTilesProps) {
   const cardStyle: SxProps = {
     p: 3,
@@ -83,22 +96,28 @@ export default function DashboardTiles({
         </Box>
       )}
 
-      {/* Tile 1: Open in Dashboard */}
+      {/* --- Tile 1: Open in Dashboard --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>
           Open in Dashboard
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<DashboardIcon />}
+        <button
+          onClick={onGoToDashboard}
           disabled={!dashboardReady}
-          onClick={onGoToDashboard} // 👈 tu podłączamy przekazaną funkcję
+          style={{
+            backgroundColor: '#00416e',
+            color: '#fff',
+            padding: '8px 16px',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: dashboardReady ? 'pointer' : 'not-allowed',
+          }}
         >
           Go
-        </Button>
+        </button>
       </Paper>
 
-      {/* Tile 2: Postal Code */}
+      {/* --- Tile 2: Postal Code --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
           Postal Code
@@ -108,7 +127,7 @@ export default function DashboardTiles({
           variant="outlined"
           fullWidth
           value={postalCode}
-          onChange={(e) => setPostalCode(e.target.value)}
+          onChange={(e) => setPostalCode(e.target.value)} // 👈 aktualizacja na bieżąco
         />
         {postalCode && (
           <Typography variant="body2" sx={{ mt: 1, color: 'gray' }}>
@@ -117,32 +136,45 @@ export default function DashboardTiles({
         )}
       </Paper>
 
-      {/* Tile 3: Download PDF */}
+      {/* --- Tile 3: Download PDF --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>
           Download PDF
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<PictureAsPdf />}
-          disabled={!dashboardReady}
-        >
-          PDF
-        </Button>
+        {result && (
+          <ExportPDFButton
+            age={age}
+            gender={gender}
+            salary={salary}
+            startYear={startYear}
+            endYear={endYear}
+            accountBalance={accountBalance}
+            subAccountBalance={subAccountBalance}
+            includeSickLeave={includeSickLeave}
+            result={result}
+          />
+        )}
       </Paper>
 
-      {/* Tile 4: Download XLS */}
+      {/* --- Tile 4: Download XLS --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>
           Download XLS
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<TableView />}
-          disabled={!dashboardReady}
-        >
-          XLS
-        </Button>
+        {result && (
+          <ExportXLSButton
+            age={age}
+            gender={gender as 'male' | 'female'}
+            salary={salary}
+            startYear={startYear}
+            endYear={endYear}
+            accountBalance={accountBalance}
+            subAccountBalance={subAccountBalance}
+            includeSickLeave={includeSickLeave}
+            result={result}
+            postalCode={postalCode} // 👈 zawsze aktualna wartość z inputa
+          />
+        )}
       </Paper>
     </Box>
   );
