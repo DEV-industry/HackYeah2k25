@@ -1,5 +1,4 @@
 import { ChevronUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 interface FooterLink {
   label: string;
@@ -46,13 +45,13 @@ function Footer({
 
   return (
     <footer
-      className="bg-[rgb(0,153,63)] text-primary-foreground max-w-full"
+      className="bg-[rgb(0,153,63)] text-primary-foreground w-full"
       data-testid="footer-main"
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-16">
-        {/* Desktop Layout */}
+      <div className="w-full max-w-[1100px] mx-auto px-0 py-12 md:py-16">
+        {/* =================== DESKTOP (≥1024px) =================== */}
         <div className="hidden lg:grid lg:grid-cols-[2fr_3fr_1fr] gap-16">
-          {/* Left Column - Navigation Links */}
+          {/* Left: Navigation */}
           <nav
             className="grid grid-cols-2 gap-x-8 gap-y-3"
             data-testid="footer-nav"
@@ -69,9 +68,8 @@ function Footer({
             ))}
           </nav>
 
-          {/* Center Column - Social Icons and Top Links */}
+          {/* Center: Top links + Social */}
           <div className="flex flex-col gap-6">
-            {/* Top Links */}
             <div className="flex gap-4 text-sm justify-center">
               {topLinks.map((link, index) => (
                 <a
@@ -85,7 +83,6 @@ function Footer({
               ))}
             </div>
 
-            {/* Social Icons */}
             <div
               className="flex gap-6 justify-center items-center"
               data-testid="footer-social"
@@ -106,23 +103,25 @@ function Footer({
             </div>
           </div>
 
-          {/* Right Column - Back to Top */}
-          <div className="flex justify-end h-0">
-            <Button
-              variant="outline"
-              onClick={scrollToTop}
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[rgb(0,153,63)] px-2 py-1.5 rounded-lg transition-all duration-200"
-              data-testid="button-back-to-top"
-            >
+          {/* Right: Back to top (text + round icon) */}
+          <div className="flex items-center justify-end gap-2">
+            <span className="text-white text-sm font-medium">
               {backToTopLabel}
-              <ChevronUp className="ml-2 h-4 w-4" />
-            </Button>
+            </span>
+            <button
+              onClick={scrollToTop}
+              className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-white hover:bg-white hover:text-[rgb(0,153,63)] transition-all duration-200"
+              aria-label="Wróć na górę strony"
+              data-testid="button-back-to-top-desktop"
+            >
+              <ChevronUp className="h-5 w-5" />
+            </button>
           </div>
         </div>
 
-        {/* Tablet Layout */}
+        {/* =================== TABLET (≥768px && <1024px) =================== */}
         <div className="hidden md:grid lg:hidden md:grid-cols-2 gap-12">
-          {/* Left Column - Navigation Links */}
+          {/* Left: Navigation */}
           <nav
             className="grid grid-cols-2 gap-x-6 gap-y-3"
             data-testid="footer-nav-tablet"
@@ -139,9 +138,8 @@ function Footer({
             ))}
           </nav>
 
-          {/* Right Column - Social & Back to Top */}
+          {/* Right: Top links + Social + Back to top */}
           <div className="flex flex-col gap-6">
-            {/* Top Links */}
             <div className="flex gap-4 text-sm flex-wrap">
               {topLinks.map((link, index) => (
                 <a
@@ -155,7 +153,6 @@ function Footer({
               ))}
             </div>
 
-            {/* Social Icons */}
             <div
               className="flex gap-5 flex-wrap"
               data-testid="footer-social-tablet"
@@ -175,24 +172,25 @@ function Footer({
               ))}
             </div>
 
-            {/* Back to Top */}
-            <div className="flex justify-start mt-2">
-              <Button
-                variant="outline"
+            <div className="flex items-center justify-start gap-2 mt-2">
+              <span className="text-white text-sm font-medium">
+                {backToTopLabel}
+              </span>
+              <button
                 onClick={scrollToTop}
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[rgb(0,153,63)] px-6 py-2.5 rounded-lg transition-all duration-200"
+                className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-white hover:bg-white hover:text-[rgb(0,153,63)] transition-all duration-200"
+                aria-label="Wróć na górę strony"
                 data-testid="button-back-to-top-tablet"
               >
-                {backToTopLabel}
-                <ChevronUp className="ml-2 h-4 w-4" />
-              </Button>
+                <ChevronUp className="h-5 w-5" />
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Layout */}
+        {/* =================== MOBILE (<768px) =================== */}
         <div className="md:hidden flex flex-col gap-8">
-          {/* Navigation Links */}
+          {/* Navigation */}
           <nav
             className="grid grid-cols-1 gap-y-3"
             data-testid="footer-nav-mobile"
@@ -209,7 +207,7 @@ function Footer({
             ))}
           </nav>
 
-          {/* Top Links */}
+          {/* Top links */}
           <div className="flex flex-col gap-3 text-base">
             {topLinks.map((link, index) => (
               <a
@@ -223,7 +221,7 @@ function Footer({
             ))}
           </div>
 
-          {/* Social Icons */}
+          {/* Social */}
           <div
             className="flex gap-6 justify-center flex-wrap"
             data-testid="footer-social-mobile"
@@ -243,16 +241,20 @@ function Footer({
             ))}
           </div>
 
-          {/* Back to Top */}
-          <Button
-            variant="outline"
-            onClick={scrollToTop}
-            className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[rgb(0,153,63)] rounded-lg transition-all duration-200 flex items-center justify-center gap-1"
-            data-testid="button-back-to-top"
-          >
-            {backToTopLabel}
-            <ChevronUp className="h-3 w-3" />
-          </Button>
+          {/* Back to top */}
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-white text-sm font-medium">
+              {backToTopLabel}
+            </span>
+            <button
+              onClick={scrollToTop}
+              className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-white hover:bg-white hover:text-[rgb(0,153,63)] transition-all duration-200"
+              aria-label="Wróć na górę strony"
+              data-testid="button-back-to-top-mobile"
+            >
+              <ChevronUp className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
     </footer>
