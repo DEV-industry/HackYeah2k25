@@ -217,7 +217,16 @@ export default function PensionSimulationSection() {
         dashboardReady={dashboardReady}
         postalCode={postalCode}
         setPostalCode={setPostalCode}
-        onGoToDashboard={goToDashboard} // 👈 przekazanie funkcji
+        onGoToDashboard={goToDashboard}
+        age={parseInt(age)}
+        gender={gender}
+        salary={parseFloat(salary)}
+        startYear={parseInt(startYear)}
+        endYear={parseInt(endYear)}
+        accountBalance={parseFloat(accountBalance) || 0}
+        subAccountBalance={parseFloat(subAccountBalance) || 0}
+        includeSickLeave={includeSickLeave}
+        result={result}
       />
     </Paper>
   );
