@@ -12,7 +12,6 @@ interface ExportXLSButtonProps {
   subAccountBalance: number;
   includeSickLeave: boolean;
   result: PensionResult;
-  postalCode?: string;
 }
 
 export const ExportXLSButton = ({
@@ -25,7 +24,6 @@ export const ExportXLSButton = ({
   subAccountBalance,
   includeSickLeave,
   result,
-  postalCode = '',
 }: ExportXLSButtonProps) => {
   const handleExport = () => {
     const headers = [
@@ -40,7 +38,6 @@ export const ExportXLSButton = ({
       'Środki na subkoncie',
       'Emerytura rzeczywista',
       'Emerytura urealniona',
-      'Kod pocztowy',
     ];
 
     const now = new Date();
@@ -56,7 +53,6 @@ export const ExportXLSButton = ({
       subAccountBalance,
       result.realPension.toFixed(2),
       result.nominalPension.toFixed(2),
-      postalCode,
     ];
 
     const worksheet = XLSX.utils.aoa_to_sheet([headers, row]);
@@ -73,6 +69,9 @@ export const ExportXLSButton = ({
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Raport symulatora');
+
+    // Zapisz i pobierz plik
+    XLSX.writeFile(workbook, 'raport_emerytury.xlsx');
   };
 
   return (
