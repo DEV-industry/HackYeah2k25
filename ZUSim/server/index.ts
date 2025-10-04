@@ -1,12 +1,21 @@
-import express, { type Request, Response, NextFunction } from 'express';
-import { registerRoutes } from './routes';
-import { setupVite, serveStatic, log } from './vite';
+import express, { type Request, Response, NextFunction } from "express";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic, log } from "./vite";
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Middleware logujący requesty
+// proxy to backend .NET
+app.use(
+  "/api",
+  createProxyMiddleware({
+    target: "http://localhost:5097", 
+    changeOrigin: true,
+  })
+);
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -40,7 +49,6 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
-  // Obsługa błędów
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || 'Internal Server Error';
@@ -49,14 +57,12 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Setup Vite tylko w development
   if (app.get('env') === 'development') {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  // Port i host
   const port = parseInt(process.env.PORT || '5000', 10);
   const host =
     process.platform === 'win32' || process.platform === 'darwin'
