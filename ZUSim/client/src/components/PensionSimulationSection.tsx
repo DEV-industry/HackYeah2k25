@@ -115,6 +115,7 @@ export default function PensionSimulationSection() {
 
   // --- Widok komponentu ---
   return (
+    <>
     <Paper sx={{ p: 4, mt: 4, borderRadius: 2 }} elevation={3}>
       <Typography
         variant="h4"
@@ -212,7 +213,9 @@ export default function PensionSimulationSection() {
       {/* Wynik lokalny */}
       {result && <PensionSimulationResult result={result} />}
 
-      {/* Dashboard Tiles */}
+      
+    </Paper>
+    {/* Dashboard Tiles */}
       <DashboardTiles
         dashboardReady={dashboardReady}
         postalCode={postalCode}
@@ -228,6 +231,6 @@ export default function PensionSimulationSection() {
         includeSickLeave={includeSickLeave}
         result={result}
       />
-    </Paper>
+      </>
   );
 }
