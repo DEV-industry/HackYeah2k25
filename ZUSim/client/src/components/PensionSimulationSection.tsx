@@ -17,18 +17,20 @@ import PensionSimulationResult from './PensionSimulationResult';
 import DashboardTiles from './DashboardTiles';
 
 export default function PensionSimulationSection() {
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [salary, setSalary] = useState('');
-  const [startYear, setStartYear] = useState('');
-  const [endYear, setEndYear] = useState('');
-  const [accountBalance, setAccountBalance] = useState('');
-  const [subAccountBalance, setSubAccountBalance] = useState('');
-  const [includeSickLeave, setIncludeSickLeave] = useState(false);
+  // --- Wartości początkowe ---
+  const [age, setAge] = useState('30');
+  const [gender, setGender] = useState('male');
+  const [salary, setSalary] = useState('5000');
+  const [startYear, setStartYear] = useState('2020');
+  const [endYear, setEndYear] = useState('2060');
+  const [accountBalance, setAccountBalance] = useState('20000');
+  const [subAccountBalance, setSubAccountBalance] = useState('5000');
+  const [includeSickLeave, setIncludeSickLeave] = useState(true);
+  const [postalCode, setPostalCode] = useState('00-001');
 
+  // --- Stan wyniku i dashboardu ---
   const [result, setResult] = useState<PensionResult | null>(null);
   const [dashboardReady, setDashboardReady] = useState(false);
-  const [postalCode, setPostalCode] = useState('');
 
   const simulatePension = () => {
     const start = parseInt(startYear);
