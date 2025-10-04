@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   TextField,
@@ -11,30 +11,33 @@ import {
   FormControlLabel,
   Button,
   Paper,
-} from '@mui/material';
-import { PensionResult } from './types';
-import PensionSimulationResult from './PensionSimulationResult';
-import DashboardTiles from './DashboardTiles';
+} from "@mui/material";
+import { PensionResult } from "./types";
+import PensionSimulationResult from "./PensionSimulationResult";
+import DashboardTiles from "./DashboardTiles";
+import { useLocation } from "wouter";
 
 export default function PensionSimulationSection() {
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [salary, setSalary] = useState('');
-  const [startYear, setStartYear] = useState('');
-  const [endYear, setEndYear] = useState('');
-  const [accountBalance, setAccountBalance] = useState('');
-  const [subAccountBalance, setSubAccountBalance] = useState('');
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [salary, setSalary] = useState("");
+  const [startYear, setStartYear] = useState("");
+  const [endYear, setEndYear] = useState("");
+  const [accountBalance, setAccountBalance] = useState("");
+  const [subAccountBalance, setSubAccountBalance] = useState("");
   const [includeSickLeave, setIncludeSickLeave] = useState(false);
 
   const [result, setResult] = useState<PensionResult | null>(null);
   const [dashboardReady, setDashboardReady] = useState(false);
-  const [postalCode, setPostalCode] = useState('');
+  const [postalCode, setPostalCode] = useState("");
+
+  const [, setLocation] = useLocation();
 
   const simulatePension = () => {
     const start = parseInt(startYear);
     const end = parseInt(endYear);
     const baseSalary = parseFloat(salary);
-    const genderKey = gender as 'male' | 'female';
+    const genderKey = gender as "male" | "female";
 
     if (!start || !end || !baseSalary || !genderKey) {
       setDashboardReady(false);
@@ -74,22 +77,40 @@ export default function PensionSimulationSection() {
       Math.pow(1 + inflationRate, end - new Date().getFullYear());
     const replacementRate = nominalPension / baseSalary;
 
-    setResult({
+    const calculatedResult: PensionResult = {
       nominalPension,
       realPension,
       replacementRate,
       salaryWithSickLeave: salaryWithSick,
       salaryWithoutSickLeave: salaryWithoutSick,
-    });
+    };
 
+    setResult(calculatedResult);
     setDashboardReady(true);
+
+    // === Przejście do dashboardu z przekazaniem danych ===
+    const encodedData = encodeURIComponent(
+      JSON.stringify({
+        age,
+        gender,
+        salary,
+        startYear,
+        endYear,
+        accountBalance,
+        subAccountBalance,
+        includeSickLeave,
+        result: calculatedResult,
+      })
+    );
+
+    setLocation(`/dashboard?data=${encodedData}`);
   };
 
   return (
     <Paper sx={{ p: 4, mt: 4, borderRadius: 2 }} elevation={3}>
       <Typography
         variant="h4"
-        sx={{ mb: 3, color: 'rgb(0,65,110)', fontWeight: 700 }}
+        sx={{ mb: 3, color: "rgb(0,65,110)", fontWeight: 700 }}
       >
         Symulacja przyszłej emerytury
       </Typography>
@@ -97,10 +118,10 @@ export default function PensionSimulationSection() {
       {/* Formularz */}
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           gap: 3,
-          flexWrap: 'wrap',
+          flexWrap: "wrap",
         }}
       >
         <TextField
@@ -108,10 +129,10 @@ export default function PensionSimulationSection() {
           type="number"
           value={age}
           onChange={(e) => setAge(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
+          sx={{ flex: 1, minWidth: "150px" }}
           required
         />
-        <FormControl sx={{ flex: 1, minWidth: '150px' }} required>
+        <FormControl sx={{ flex: 1, minWidth: "150px" }} required>
           <InputLabel>Płeć</InputLabel>
           <Select value={gender} onChange={(e) => setGender(e.target.value)}>
             <MenuItem value="male">Mężczyzna</MenuItem>
@@ -123,7 +144,7 @@ export default function PensionSimulationSection() {
           type="number"
           value={salary}
           onChange={(e) => setSalary(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
+          sx={{ flex: 1, minWidth: "150px" }}
           required
         />
         <TextField
@@ -131,8 +152,7 @@ export default function PensionSimulationSection() {
           type="number"
           value={startYear}
           onChange={(e) => setStartYear(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
-          placeholder="styczeń"
+          sx={{ flex: 1, minWidth: "150px" }}
           required
         />
         <TextField
@@ -140,8 +160,7 @@ export default function PensionSimulationSection() {
           type="number"
           value={endYear}
           onChange={(e) => setEndYear(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
-          placeholder="styczeń"
+          sx={{ flex: 1, minWidth: "150px" }}
           required
         />
         <TextField
@@ -149,14 +168,14 @@ export default function PensionSimulationSection() {
           type="number"
           value={accountBalance}
           onChange={(e) => setAccountBalance(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
+          sx={{ flex: 1, minWidth: "150px" }}
         />
         <TextField
           label="Środki na subkoncie w ZUS"
           type="number"
           value={subAccountBalance}
           onChange={(e) => setSubAccountBalance(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
+          sx={{ flex: 1, minWidth: "150px" }}
         />
         <FormControlLabel
           control={
@@ -166,12 +185,12 @@ export default function PensionSimulationSection() {
             />
           }
           label="Uwzględniaj możliwość zwolnień lekarskich"
-          sx={{ flexBasis: '100%' }}
+          sx={{ flexBasis: "100%" }}
         />
       </Box>
 
       {/* Symuluj */}
-      <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
         <Button
           variant="contained"
           color="primary"
