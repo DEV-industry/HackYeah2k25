@@ -20,7 +20,7 @@ export default function RandomFactBanner({ facts }: RandomFactBannerProps) {
   };
 
   useEffect(() => {
-    const interval = setInterval(rotateFact, 8000);
+    const interval = setInterval(rotateFact, 2500);
     return () => clearInterval(interval);
   }, [facts.length]);
 

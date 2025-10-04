@@ -47,6 +47,8 @@ export default function DashboardTiles({
     opacity: dashboardReady ? 1 : 0.5,
   };
 
+
+
   return (
     <Box
       sx={{
@@ -92,7 +94,7 @@ export default function DashboardTiles({
       {/* --- Tile 1: Open in Dashboard --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>
-          Open in Dashboard
+          Otworz w Dashboard
         </Typography>
         <button
           onClick={onGoToDashboard}
@@ -113,10 +115,10 @@ export default function DashboardTiles({
       {/* --- Tile 2: Postal Code --- */}
       <Paper sx={cardStyle}>
         <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-          Postal Code
+          Kod pocztowy
         </Typography>
         <TextField
-          label="Enter postal code (optional)"
+          label="Wpisz kod pocztowy (optional)"
           variant="outlined"
           fullWidth
           value={postalCode}
@@ -124,7 +126,7 @@ export default function DashboardTiles({
         />
         {postalCode && (
           <Typography variant="body2" sx={{ mt: 1, color: 'gray' }}>
-            Entered: {postalCode}
+            Wpisany: {postalCode}
           </Typography>
         )}
       </Paper>
