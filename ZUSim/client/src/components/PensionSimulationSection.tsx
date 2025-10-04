@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Box,
   TextField,
@@ -11,43 +11,43 @@ import {
   FormControlLabel,
   Button,
   Paper,
-} from "@mui/material";
-import { PensionResult } from "./types";
-import PensionSimulationResult from "./PensionSimulationResult";
-import DashboardTiles from "./DashboardTiles";
-import { useLocation } from "wouter";
+} from '@mui/material';
+import { useLocation } from 'wouter';
+import { PensionResult } from './types';
+import PensionSimulationResult from './PensionSimulationResult';
+import DashboardTiles from './DashboardTiles';
 
 export default function PensionSimulationSection() {
   // --- Stan formularza ---
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [salary, setSalary] = useState("");
-  const [startYear, setStartYear] = useState("");
-  const [endYear, setEndYear] = useState("");
-  const [accountBalance, setAccountBalance] = useState("");
-  const [subAccountBalance, setSubAccountBalance] = useState("");
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [salary, setSalary] = useState('');
+  const [startYear, setStartYear] = useState('');
+  const [endYear, setEndYear] = useState('');
+  const [accountBalance, setAccountBalance] = useState('');
+  const [subAccountBalance, setSubAccountBalance] = useState('');
   const [includeSickLeave, setIncludeSickLeave] = useState(false);
-  const [postalCode, setPostalCode] = useState("");
+  const [postalCode, setPostalCode] = useState('');
 
   // --- Wynik i stan widoku ---
   const [result, setResult] = useState<PensionResult | null>(null);
   const [dashboardReady, setDashboardReady] = useState(false);
   const [, setLocation] = useLocation();
 
-  const simulatePension = () => {
+  // --- Główna funkcja symulacji ---
+  const simulatePension = (): PensionResult | null => {
     const start = parseInt(startYear);
     const end = parseInt(endYear);
     const baseSalary = parseFloat(salary);
-    const genderKey = gender as "male" | "female";
+    const genderKey = gender as 'male' | 'female';
 
     if (!start || !end || !baseSalary || !genderKey) {
       setDashboardReady(false);
-      return;
+      return null;
     }
 
     const acc = parseFloat(accountBalance) || 0;
     const subAcc = parseFloat(subAccountBalance) || 0;
-    const retirementRate = 0.1952;
     const salaryGrowth = 0.05;
     const inflationRate = 0.03;
     const averageSickDays = { male: 10, female: 14 };
@@ -88,8 +88,14 @@ export default function PensionSimulationSection() {
 
     setResult(calculatedResult);
     setDashboardReady(true);
+    return calculatedResult;
+  };
 
-    // --- Przekazanie danych do dashboardu przez URL ---
+  // --- Przekierowanie do Dashboardu ---
+  const goToDashboard = () => {
+    const calculatedResult = simulatePension();
+    if (!calculatedResult) return;
+
     const encodedData = encodeURIComponent(
       JSON.stringify({
         age,
@@ -107,11 +113,12 @@ export default function PensionSimulationSection() {
     setLocation(`/dashboard?data=${encodedData}`);
   };
 
+  // --- Widok komponentu ---
   return (
     <Paper sx={{ p: 4, mt: 4, borderRadius: 2 }} elevation={3}>
       <Typography
         variant="h4"
-        sx={{ mb: 3, color: "rgb(0,65,110)", fontWeight: 700 }}
+        sx={{ mb: 3, color: 'rgb(0,65,110)', fontWeight: 700 }}
       >
         Symulacja przyszłej emerytury
       </Typography>
@@ -119,10 +126,10 @@ export default function PensionSimulationSection() {
       {/* Formularz */}
       <Box
         sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
           gap: 3,
-          flexWrap: "wrap",
+          flexWrap: 'wrap',
         }}
       >
         <TextField
@@ -130,10 +137,10 @@ export default function PensionSimulationSection() {
           type="number"
           value={age}
           onChange={(e) => setAge(e.target.value)}
-          sx={{ flex: 1, minWidth: "150px" }}
+          sx={{ flex: 1, minWidth: '150px' }}
           required
         />
-        <FormControl sx={{ flex: 1, minWidth: "150px" }} required>
+        <FormControl sx={{ flex: 1, minWidth: '150px' }} required>
           <InputLabel>Płeć</InputLabel>
           <Select value={gender} onChange={(e) => setGender(e.target.value)}>
             <MenuItem value="male">Mężczyzna</MenuItem>
@@ -145,7 +152,7 @@ export default function PensionSimulationSection() {
           type="number"
           value={salary}
           onChange={(e) => setSalary(e.target.value)}
-          sx={{ flex: 1, minWidth: "150px" }}
+          sx={{ flex: 1, minWidth: '150px' }}
           required
         />
         <TextField
@@ -153,7 +160,7 @@ export default function PensionSimulationSection() {
           type="number"
           value={startYear}
           onChange={(e) => setStartYear(e.target.value)}
-          sx={{ flex: 1, minWidth: "150px" }}
+          sx={{ flex: 1, minWidth: '150px' }}
           required
         />
         <TextField
@@ -161,7 +168,7 @@ export default function PensionSimulationSection() {
           type="number"
           value={endYear}
           onChange={(e) => setEndYear(e.target.value)}
-          sx={{ flex: 1, minWidth: "150px" }}
+          sx={{ flex: 1, minWidth: '150px' }}
           required
         />
         <TextField
@@ -169,14 +176,14 @@ export default function PensionSimulationSection() {
           type="number"
           value={accountBalance}
           onChange={(e) => setAccountBalance(e.target.value)}
-          sx={{ flex: 1, minWidth: "150px" }}
+          sx={{ flex: 1, minWidth: '150px' }}
         />
         <TextField
           label="Środki na subkoncie w ZUS"
           type="number"
           value={subAccountBalance}
           onChange={(e) => setSubAccountBalance(e.target.value)}
-          sx={{ flex: 1, minWidth: "150px" }}
+          sx={{ flex: 1, minWidth: '150px' }}
         />
         <FormControlLabel
           control={
@@ -186,12 +193,12 @@ export default function PensionSimulationSection() {
             />
           }
           label="Uwzględniaj możliwość zwolnień lekarskich"
-          sx={{ flexBasis: "100%" }}
+          sx={{ flexBasis: '100%' }}
         />
       </Box>
 
-      {/* Symuluj */}
-      <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
+      {/* Przyciski */}
+      <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
         <Button
           variant="contained"
           color="primary"
@@ -202,7 +209,7 @@ export default function PensionSimulationSection() {
         </Button>
       </Box>
 
-      {/* Wynik */}
+      {/* Wynik lokalny */}
       {result && <PensionSimulationResult result={result} />}
 
       {/* Dashboard Tiles */}
@@ -210,6 +217,7 @@ export default function PensionSimulationSection() {
         dashboardReady={dashboardReady}
         postalCode={postalCode}
         setPostalCode={setPostalCode}
+        onGoToDashboard={goToDashboard} // 👈 przekazanie funkcji
       />
     </Paper>
   );
