@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import PensionInputSection from '@/components/PensionInputSection';
 import PensionDistributionChart from '@/components/PensionDistributionChart';
 import RandomFactBanner from '@/components/RandomFactBanner';
+import PensionSimulationSection from '@/components/PensionSimulationSection';
 import { PensionGroup, PensionFact } from '@shared/schema';
 
 export default function Home() {
@@ -115,6 +116,7 @@ export default function Home() {
     }}
   >
     <RandomFactBanner facts={pensionFacts} />
+    <PensionSimulationSection />
   </Box>
 </Box>
 
