@@ -44,7 +44,7 @@ export default function DashboardTiles({ dashboardReady, postalCode, setPostalCo
         px: 2
       }}
     >
-      Please complete the pension form first to access dashboard options
+      Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij formularz emerytalny
     </Typography>
   </Box>
 )}
