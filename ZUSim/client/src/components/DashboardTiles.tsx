@@ -1,13 +1,27 @@
-import { Box, Paper, Typography, Button, TextField, SxProps } from '@mui/material';
-import { PictureAsPdf, TableView, OpenInNew } from '@mui/icons-material';
+import {
+  Box,
+  Paper,
+  Typography,
+  Button,
+  TextField,
+  SxProps,
+} from '@mui/material';
+import { PictureAsPdf, TableView } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+
 interface DashboardTilesProps {
   dashboardReady: boolean;
   postalCode: string;
   setPostalCode: (code: string) => void;
+  onGoToDashboard: () => void; // 👈 nowy prop
 }
 
-export default function DashboardTiles({ dashboardReady, postalCode, setPostalCode }: DashboardTilesProps) {
+export default function DashboardTiles({
+  dashboardReady,
+  postalCode,
+  setPostalCode,
+  onGoToDashboard,
+}: DashboardTilesProps) {
   const cardStyle: SxProps = {
     p: 3,
     textAlign: 'center',
@@ -21,88 +35,108 @@ export default function DashboardTiles({ dashboardReady, postalCode, setPostalCo
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', maxWidth: '1000px', margin: '0 auto', position: 'relative', mt: 4 }}>
-      {!dashboardReady && (
-  <Box sx={{
-    position: 'absolute',
-    inset: 0,
-    background: 'rgba(255,255,255,0.5)', // półprzezroczyste tło
-    backdropFilter: 'blur(4px)',          // dodany blur
-    WebkitBackdropFilter: 'blur(4px)',   // dla Safari
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
-    borderRadius: 2,
-  }}>
-    <Typography
-      variant="h6"
+    <Box
       sx={{
-        color: 'rgb(0,65,110)',
-        fontWeight: 700,
-        textAlign: 'center',
-        px: 2
+        display: 'flex',
+        gap: 2,
+        flexWrap: 'wrap',
+        maxWidth: '1000px',
+        margin: '0 auto',
+        position: 'relative',
+        mt: 4,
       }}
     >
-      Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij formularz emerytalny
-    </Typography>
-  </Box>
-)}
+      {!dashboardReady && (
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(255,255,255,0.5)',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 10,
+            borderRadius: 2,
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              color: 'rgb(0,65,110)',
+              fontWeight: 700,
+              textAlign: 'center',
+              px: 2,
+            }}
+          >
+            Aby uzyskać dostęp do opcji pulpitu nawigacyjnego, najpierw wypełnij
+            formularz emerytalny
+          </Typography>
+        </Box>
+      )}
 
+      {/* Tile 1: Open in Dashboard */}
+      <Paper sx={cardStyle}>
+        <Typography variant="subtitle1" sx={{ mb: 2 }}>
+          Open in Dashboard
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<DashboardIcon />}
+          disabled={!dashboardReady}
+          onClick={onGoToDashboard} // 👈 tu podłączamy przekazaną funkcję
+        >
+          Go
+        </Button>
+      </Paper>
 
-        {/* Tile 1: Open in Dashboard */}
-    <Paper sx={cardStyle}>
-      <Typography variant="subtitle1" sx={{ mb: 2 }}>Open in Dashboard</Typography>
-      <Button
-        variant="contained"
-        startIcon={<DashboardIcon />}
-        disabled={!dashboardReady}
-      >
-        Go
-      </Button>
-    </Paper>
       {/* Tile 2: Postal Code */}
       <Paper sx={cardStyle}>
-  <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-    Postal Code
-  </Typography>
-  <TextField
-    label="Enter postal code (optional)"
-    variant="outlined"
-    fullWidth
-    value={postalCode}
-    onChange={(e) => setPostalCode(e.target.value)}
-  />
-  {postalCode && (
-    <Typography variant="body2" sx={{ mt: 1, color: 'gray' }}>
-      Entered: {postalCode}
-    </Typography>
-  )}
-</Paper>
+        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
+          Postal Code
+        </Typography>
+        <TextField
+          label="Enter postal code (optional)"
+          variant="outlined"
+          fullWidth
+          value={postalCode}
+          onChange={(e) => setPostalCode(e.target.value)}
+        />
+        {postalCode && (
+          <Typography variant="body2" sx={{ mt: 1, color: 'gray' }}>
+            Entered: {postalCode}
+          </Typography>
+        )}
+      </Paper>
 
       {/* Tile 3: Download PDF */}
-<Paper sx={cardStyle}>
-  <Typography variant="subtitle1" sx={{ mb: 2 }}>Download PDF</Typography>
-  <Button
-    variant="contained"
-    startIcon={<PictureAsPdf />}
-    disabled={!dashboardReady}
-  >
-    PDF
-  </Button>
-</Paper>
+      <Paper sx={cardStyle}>
+        <Typography variant="subtitle1" sx={{ mb: 2 }}>
+          Download PDF
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<PictureAsPdf />}
+          disabled={!dashboardReady}
+        >
+          PDF
+        </Button>
+      </Paper>
 
-{/* Tile 4: Download XLS */}
-<Paper sx={cardStyle}>
-  <Typography variant="subtitle1" sx={{ mb: 2 }}>Download XLS</Typography>
-  <Button
-    variant="contained"
-    startIcon={<TableView />}
-    disabled={!dashboardReady}
-  >
-    XLS
-  </Button>
-</Paper>
+      {/* Tile 4: Download XLS */}
+      <Paper sx={cardStyle}>
+        <Typography variant="subtitle1" sx={{ mb: 2 }}>
+          Download XLS
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<TableView />}
+          disabled={!dashboardReady}
+        >
+          XLS
+        </Button>
+      </Paper>
     </Box>
   );
 }
