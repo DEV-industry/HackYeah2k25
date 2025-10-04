@@ -53,21 +53,20 @@ export default function ZUSHeader() {
               <ChevronDown className="h-4 w-4" />
             </Button>
 
-            {/* Accessibility Icons */}
             <Button
               size="icon"
-              className="bg-blue text-white hover:bg-blue/90 border-0"
+              className="bg-blue-600 hover:bg-blue-700 border-0 flex items-center justify-center"
               data-testid="button-audio-assist"
             >
-              <Volume2 className="h-4 w-4" />
+              <Volume2 className="h-4 w-4" stroke="white" />
             </Button>
 
             <Button
               size="icon"
-              className="bg-blue text-white hover:bg-blue/90 border-0"
+              className="bg-blue-600 hover:bg-blue-700 border-0 flex items-center justify-center"
               data-testid="button-accessibility"
             >
-              <Accessibility className="h-4 w-4" />
+              <Accessibility className="h-4 w-4" stroke="white" />
             </Button>
 
             {/* IBIP Button */}
