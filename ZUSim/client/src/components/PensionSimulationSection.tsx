@@ -14,10 +14,9 @@ import {
 } from '@mui/material';
 import { PensionResult } from './types';
 import PensionSimulationResult from './PensionSimulationResult';
-import { ExportPDFButton } from './ExportPDFButton';
+import DashboardTiles from './DashboardTiles';
 
 export default function PensionSimulationSection() {
-  // Formularz
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
   const [salary, setSalary] = useState('');
@@ -27,23 +26,27 @@ export default function PensionSimulationSection() {
   const [subAccountBalance, setSubAccountBalance] = useState('');
   const [includeSickLeave, setIncludeSickLeave] = useState(false);
 
-  // Wynik
   const [result, setResult] = useState<PensionResult | null>(null);
+  const [dashboardReady, setDashboardReady] = useState(false);
+  const [postalCode, setPostalCode] = useState('');
 
   const simulatePension = () => {
     const start = parseInt(startYear);
     const end = parseInt(endYear);
     const baseSalary = parseFloat(salary);
-    const acc = parseFloat(accountBalance) || 0;
-    const subAcc = parseFloat(subAccountBalance) || 0;
     const genderKey = gender as 'male' | 'female';
 
-    if (!start || !end || !baseSalary || !genderKey) return;
+    if (!start || !end || !baseSalary || !genderKey) {
+      setDashboardReady(false);
+      return;
+    }
 
-    const retirementRate = 0.1952; // 19,52%
-    const salaryGrowth = 0.05; // średni wzrost wynagrodzeń
-    const inflationRate = 0.03; // inflacja dla urealnienia
-    const averageSickDays = { male: 10, female: 14 }; // średnie dni zwolnienia
+    const acc = parseFloat(accountBalance) || 0;
+    const subAcc = parseFloat(subAccountBalance) || 0;
+    const retirementRate = 0.1952;
+    const salaryGrowth = 0.05;
+    const inflationRate = 0.03;
+    const averageSickDays = { male: 10, female: 14 };
 
     let adjustedSalary =
       baseSalary / Math.pow(1 + salaryGrowth, new Date().getFullYear() - start);
@@ -53,26 +56,22 @@ export default function PensionSimulationSection() {
 
     for (let year = start; year <= end; year++) {
       adjustedSalary *= 1 + salaryGrowth;
-
       const effectiveSalary = includeSickLeave
         ? adjustedSalary * (1 - averageSickDays[genderKey] / 260)
         : adjustedSalary;
 
-      totalContributions += effectiveSalary * retirementRate;
-      salaryWithSick +=
-        adjustedSalary *
-        (includeSickLeave ? 1 - averageSickDays[genderKey] / 260 : 1);
+      totalContributions += effectiveSalary;
+      salaryWithSick += effectiveSalary;
       salaryWithoutSick += adjustedSalary;
     }
 
     totalContributions += acc + subAcc;
 
-    const expectedRetirementYears = 20; // np. średnia długość życia po przejściu na emeryturę
+    const expectedRetirementYears = 20;
     const nominalPension = totalContributions / expectedRetirementYears;
     const realPension =
       nominalPension /
       Math.pow(1 + inflationRate, end - new Date().getFullYear());
-
     const replacementRate = nominalPension / baseSalary;
 
     setResult({
@@ -82,6 +81,8 @@ export default function PensionSimulationSection() {
       salaryWithSickLeave: salaryWithSick,
       salaryWithoutSickLeave: salaryWithoutSick,
     });
+
+    setDashboardReady(true);
   };
 
   return (
@@ -93,6 +94,7 @@ export default function PensionSimulationSection() {
         Symulacja przyszłej emerytury
       </Typography>
 
+      {/* Formularz */}
       <Box
         sx={{
           display: 'flex',
@@ -168,6 +170,7 @@ export default function PensionSimulationSection() {
         />
       </Box>
 
+      {/* Symuluj */}
       <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
         <Button
           variant="contained"
@@ -179,20 +182,15 @@ export default function PensionSimulationSection() {
         </Button>
       </Box>
 
+      {/* Wynik */}
       {result && <PensionSimulationResult result={result} />}
-      {result && (
-        <ExportPDFButton
-          age={parseInt(age)}
-          gender={gender}
-          salary={parseFloat(salary)}
-          startYear={parseInt(startYear)}
-          endYear={parseInt(endYear)}
-          accountBalance={parseFloat(accountBalance) || 0}
-          subAccountBalance={parseFloat(subAccountBalance) || 0}
-          includeSickLeave={includeSickLeave}
-          result={result}
-        />
-      )}
+
+      {/* Dashboard Tiles */}
+      <DashboardTiles
+        dashboardReady={dashboardReady}
+        postalCode={postalCode}
+        setPostalCode={setPostalCode}
+      />
     </Paper>
   );
 }
