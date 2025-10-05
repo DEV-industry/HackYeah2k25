@@ -92,6 +92,7 @@ docknet run
 ```
 
 ---
+<img src="ZUSim/screenfull.png" alt="ZUS screenshot" width="100%"/>
 
 ---
 
@@ -120,8 +121,8 @@ docknet run
   "salaryWithoutSickLeave": 520000
 }
 ```
-
 ---
+
 
 ## Eksport PDF / XLS - implementacja
 
