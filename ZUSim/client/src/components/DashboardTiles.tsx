@@ -108,7 +108,7 @@ export default function DashboardTiles({
   };
 
 return (
-    <div className="relative max-w-[1100px] mx-auto mt-8">
+    <div className="relative max-w-[1100px] mx-auto mt-8 p-[65px]">
       {!dashboardReady && (
         <div className="absolute -inset-5 bg-background/80 backdrop-blur-md rounded-xl z-10 flex items-center justify-center p-6">
           <p className="text-lg font-bold text-chart-1 text-center max-w-md">
