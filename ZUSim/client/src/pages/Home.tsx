@@ -10,52 +10,18 @@ import Footer from '@/components/Footer';
 import PensionReportSection from '@/components/DashboardTiles';
 import DashboardTiles from '@/components/DashboardTiles';
 
+const CARD_SHADOW = '0 6px 16px rgba(0, 65, 110, 0.12)';
+
 export default function Home() {
   const [desiredPension, setDesiredPension] = useState('');
 
   const pensionGroups: PensionGroup[] = [
-    {
-      name: 'Poniżej minimalnej',
-      amount: 1200,
-      description:
-        'Świadczeniobiorcy otrzymujący emeryturę w wysokości poniżej minimalnej wykazywali się niską aktywnością zawodową...',
-      color: 'rgb(240, 94, 94)',
-    },
-    {
-      name: 'Minimalna',
-      amount: 1780,
-      description:
-        'Emerytury na poziomie minimalnym otrzymują osoby, które przepracowały wymagany staż...',
-      color: 'rgb(190, 195, 206)',
-    },
-    {
-      name: 'Poniżej średniej',
-      amount: 2500,
-      description:
-        'Grupa emerytów z niższymi zarobkami w trakcie kariery zawodowej...',
-      color: 'rgb(63, 132, 210)',
-    },
-    {
-      name: 'Średnia',
-      amount: 3200,
-      description:
-        'Emeryci z regularną aktywnością zawodową i średnimi zarobkami...',
-      color: 'rgb(255, 179, 79)',
-    },
-    {
-      name: 'Powyżej średniej',
-      amount: 4500,
-      description:
-        'Osoby z wyższymi zarobkami, długim stażem pracy i regularnym opłacaniem składek...',
-      color: 'rgb(0, 153, 63)',
-    },
-    {
-      name: 'Wysokie',
-      amount: 6800,
-      description:
-        'Najwyższe emerytury otrzymują osoby z bardzo długim stażem pracy...',
-      color: 'rgb(0, 65, 110)',
-    },
+    { name: 'Poniżej minimalnej', amount: 1200, description: 'Świadczeniobiorcy otrzymujący emeryturę w wysokości poniżej minimalnej wykazywali się niską aktywnością zawodową...', color: 'rgb(240, 94, 94)' },
+    { name: 'Minimalna', amount: 1780, description: 'Emerytury na poziomie minimalnym otrzymują osoby, które przepracowały wymagany staż...', color: 'rgb(190, 195, 206)' },
+    { name: 'Poniżej średniej', amount: 2500, description: 'Grupa emerytów z niższymi zarobkami w trakcie kariery zawodowej...', color: 'rgb(63, 132, 210)' },
+    { name: 'Średnia', amount: 3200, description: 'Emeryci z regularną aktywnością zawodową i średnimi zarobkami...', color: 'rgb(255, 179, 79)' },
+    { name: 'Powyżej średniej', amount: 4500, description: 'Osoby z wyższymi zarobkami, długim stażem pracy i regularnym opłacaniem składek...', color: 'rgb(0, 153, 63)' },
+    { name: 'Wysokie', amount: 6800, description: 'Najwyższe emerytury otrzymują osoby z bardzo długim stażem pracy...', color: 'rgb(0, 65, 110)' },
   ];
 
   const pensionFacts: PensionFact[] = [
@@ -80,55 +46,52 @@ export default function Home() {
     >
       <ZUSHeader />
 
-      {/* GŁÓWNY BLOK STRONY */}
-      <Box
-        sx={{
-          width: '100%',
-          maxWidth: '1100px', // <= ograniczenie szerokości
-          mx: 'auto', // wyśrodkowanie
-          px: 2, // wewnętrzne odstępy po bokach
-          flex: 1, // wypełnia przestrzeń
-        }}
-      >
-
-      {/* Input Section */}
-      <Box className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]"
-      sx={{
-        overflowX: 'clip',
-        backgroundImage:
-          'url("https://images.unsplash.com/photo-1574376407492-c3cf78231def?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        py: { xs: 3, md: 6 },
-        mt: { xs: 2, md: 3 },
-      }}
-    >
       <Box
         sx={{
           width: '100%',
           maxWidth: '1100px',
           mx: 'auto',
-          boxSizing: 'border-box',
-          backdropFilter: 'blur(5px)',
-          backgroundColor: 'rgba(255,255,255,0.85)',
-          borderRadius: 2,
-          px: { xs: 3, sm: 3, md: 4 },
-          py: { xs: 3, md: 4 },
+          px: 2,
+          flex: 1,
+          mb: "50px"
         }}
       >
-        <PensionInputSection
-          desiredPension={desiredPension}
-          onDesiredPensionChange={setDesiredPension}
-          averagePension={averagePension}
-        />
-      </Box>
-    </Box>
+        <Box
+          className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]"
+          sx={{
+            overflowX: 'clip',
+            backgroundImage:
+              'url("https://images.unsplash.com/photo-1574376407492-c3cf78231def?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            py: { xs: 3, md: 6 },
+            mt: { xs: 2, md: 3 },
+          }}
+        >
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '1100px',
+              mx: 'auto',
+              boxSizing: 'border-box',
+              backdropFilter: 'blur(5px)',
+              backgroundColor: 'rgba(255,255,255,0.85)',
+              borderRadius: 2,
+              px: { xs: 3, sm: 3, md: 4 },
+              py: { xs: 3, md: 4 },
+              boxShadow: CARD_SHADOW,
+              '& .MuiPaper-root': { boxShadow: 'none' },
+            }}
+          >
+            <PensionInputSection
+              desiredPension={desiredPension}
+              onDesiredPensionChange={setDesiredPension}
+              averagePension={averagePension}
+            />
+          </Box>
+        </Box>
 
-
-
-
-        {/* Distribution Chart */}
         <Box
           sx={{
             height: { xs: 'auto', md: '50vh' },
@@ -136,20 +99,23 @@ export default function Home() {
             bgcolor: 'rgb(250, 250, 250)',
             borderRadius: 2,
             my: 2,
+            boxShadow: CARD_SHADOW,
+            '& .MuiPaper-root': { boxShadow: 'none' },
           }}
         >
           <PensionDistributionChart groups={pensionGroups} />
         </Box>
 
-        {/* Random Fact Banner + Symulacja */}
         <Box
           sx={{
             my: 2,
             borderRadius: '5px',
             overflow: 'hidden',
             bgcolor: 'background.paper',
+            boxShadow: CARD_SHADOW,
+            '& .MuiPaper-root': { boxShadow: 'none' },
+            '& .zus-card, & .zus-card-hover, & .zus-card-static': { boxShadow: 'none' },
           }}
-          style={{ borderRadius: '5px' }}
         >
           <RandomFactBanner facts={pensionFacts} />
           <Box sx={{ mt: 2 }}>
@@ -157,7 +123,7 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-      {/* Stopka */}
+
       <Footer />
     </Box>
   );
