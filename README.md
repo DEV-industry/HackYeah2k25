@@ -1,7 +1,7 @@
 # ZUSim — Symulator Emerytalny  
 **HackYeah 2k25 — UnEmploYet**  
 
-> Interaktywny symulator emerytalny (frontend: Vite + React + TypeScript, UI: MUI, backend: .NET/C#).  
+> Interaktywny symulator emerytalny (frontend: Vite + React + TypeScript, UI: MUI, Unsplash backend: .NET/C#/Express).  
 > Raporty PDF/XLS, dashboard, symulacja z uwzględnieniem zwolnień lekarskich, eksporty i prosty monitoring użycia.
 
 ---
@@ -13,11 +13,17 @@
   </tr>
 </table>
 <p>
+  <img src="https://img.shields.io/github/stars/DEV-industry/HackYeah2k25?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Stars"/>
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Badge"/>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript Badge"/>
   <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Badge"/>
   <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET Badge"/>
-  <img src="https://img.shields.io/github/stars/DEV-industry/HackYeah2k25?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Stars"/>
+  <img src="https://img.shields.io/badge/Backend-Express.js-white?style=for-the-badge&logo=express&logoColor=black" alt="Express.js Badge"/>
+
+
+  <img src="https://img.shields.io/badge/Images-Unsplash-000000?style=for-the-badge&logo=unsplash&logoColor=white" alt="Unsplash Badge"/>
+
+
 
 </p>
 
@@ -37,6 +43,7 @@
 - [Dostępność (WCAG), kolorystyka i style](#dostępność-wcag-kolorystyka-i-style)     
 - [Roadmap / dalsze prace](#roadmap--dalsze-prace)    
 - [Licencja](#licencja)
+- [Sources](#sources)
 
 ---
 
@@ -179,6 +186,12 @@ Projekt jest w wersji MVP i planujemy dalsze rozwinięcie funkcjonalności oraz 
 
 > Wszystkie prace nad projektem będą dokumentowane w kolejnych commitach, a roadmapa może ulegać zmianie w zależności od feedbacku podczas HackYeah 2k25.
 
+---
+## Sources
+*unsplash photo sources:*
+> *https://images.unsplash.com/photo-1574376407492-c3cf78231def?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D*
+> <br>
+> *https://images.unsplash.com/photo-1670141545540-7ffd026a6c74?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDd8fGF1dHVtbiUyMGxlYXZlc3xlbnwwfHwwfHx8MA%3D%3D*
 ---
 
 ## Licencja
