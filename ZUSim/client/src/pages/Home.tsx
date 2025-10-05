@@ -44,8 +44,6 @@ export default function Home() {
       }}
       data-testid="page-home"
     >
-      <ZUSHeader />
-
       <Box
         sx={{
           width: '100%',
@@ -123,8 +121,6 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-
-      <Footer />
     </Box>
   );
 }

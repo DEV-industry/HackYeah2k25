@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import DashboardPage from "@/pages/DashboardPage";
 import ZUSHeader from "./components/ZUSHeader";
 import { SimulationProvider } from "../src/context/SimulationContext";
+import Footer from "./components/Footer";
 
 function Router() {
   return (
@@ -22,12 +23,14 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ZUSHeader />
       <TooltipProvider>
         <SimulationProvider>
           <Toaster />
           <Router />
         </SimulationProvider>
       </TooltipProvider>
+      <Footer />
     </QueryClientProvider>
   );
 }
