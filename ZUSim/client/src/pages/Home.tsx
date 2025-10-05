@@ -65,7 +65,7 @@ export default function Home() {
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             py: { xs: 3, md: 6 },
-            mt: { xs: 2, md: 3 },
+            mt: { xs: 0, md: 0 },
           }}
         >
           <Box
