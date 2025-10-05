@@ -1,7 +1,7 @@
 # ZUSim — Symulator Emerytalny  
 **HackYeah 2k25 — UnEmploYed**  
 
-> Interaktywny symulator emerytalny (frontend: Vite + React + TypeScript, UI: MUI + shadcn components, backend: .NET/C#).  
+> Interaktywny symulator emerytalny (frontend: Vite + React + TypeScript, UI: MUI, backend: .NET/C#).  
 > Raporty PDF/XLS, dashboard, symulacja z uwzględnieniem zwolnień lekarskich, eksporty i prosty monitoring użycia.
 
 ---
@@ -28,7 +28,7 @@
 
 ## Spis treści
 
-- [Czym jest projekt](#czym-jest-projekt)  
+- [O czym jest projekt](#o-czym-jest-projekt)  
 - [Funkcjonalności](#funkcjonalności)   
 - [Wymagania](#wymagania)   
 - [Szybkie uruchomienie (deweloperskie)](#szybkie-uruchomienie-deweloperskie)  
@@ -40,7 +40,7 @@
 
 ---
 
-## Czym jest projekt
+## O czym jest projekt
 
 ZUSim to aplikacja/symulator umożliwiająca wyliczenie prognozowanej emerytury w oparciu o dane wejściowe (wiek, płeć, wynagrodzenie brutto, rok rozpoczęcia pracy, planowany rok zakończenia pracy, opcjonalne środki na koncie ZUS/subkoncie oraz uwzględnianie zwolnień lekarskich). Wynik podawany jest w postaci emerytury nominalnej i urealnionej, porównania do średniej i wykresów. Możliwość pobrania raportu PDF i XLS oraz zapisania użyć symulatora (raport zainteresowania).
 
@@ -90,6 +90,8 @@ cd ZUSim-backend
 npm install       
 docknet run           
 ```
+
+---
 
 ---
 
