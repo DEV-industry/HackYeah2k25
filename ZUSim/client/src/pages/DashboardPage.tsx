@@ -10,13 +10,15 @@ import {
   Legend,
 } from "recharts";
 
+const fmt = (n: number) =>
+  new Intl.NumberFormat("pl-PL", { maximumFractionDigits: 0 }).format(n);
+const fmtZl = (n: number) => `${fmt(n)} zł`;
+
 export default function DashboardPage() {
-  // 1️⃣ Pobranie parametru z URL
   const [location] = useLocation();
   const params = new URLSearchParams(window.location.search);
   const encoded = params.get("data");
 
-  // 2️⃣ Dekodowanie danych z URL
   const simulationData = useMemo(() => {
     if (!encoded) return null;
     try {
@@ -26,7 +28,6 @@ export default function DashboardPage() {
     }
   }, [encoded]);
 
-  // 3️⃣ Brak danych -> komunikat
   if (!simulationData) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center text-center text-[var(--zus-navy)] px-6">
@@ -51,7 +52,6 @@ export default function DashboardPage() {
     result,
   } = simulationData;
 
-  // 4️⃣ Przygotowanie danych do wykresu liniowego
   const lineData = Array.from(
     { length: Number(endYear) - Number(startYear) + 1 },
     (_, i) => {
@@ -77,12 +77,11 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen py-10 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6">
-        {/* === LEWY PANEL (PARAMETRY) === */}
         <aside
           className="col-span-12 lg:col-span-3 flex flex-col gap-6"
           aria-labelledby="form-title"
         >
-          <div className="zus-card">
+          <div className="zus-card no-hover">
             <h2 id="form-title" className="zus-subheader mb-4">
               Parametry symulacji
             </h2>
@@ -92,11 +91,10 @@ export default function DashboardPage() {
                 <b>Wiek:</b> {age}
               </p>
               <p>
-                <b>Płeć:</b>{" "}
-                {gender === "male" ? "Mężczyzna" : "Kobieta"}
+                <b>Płeć:</b> {gender === "male" ? "Mężczyzna" : "Kobieta"}
               </p>
               <p>
-                <b>Wynagrodzenie brutto:</b> {salary} zł
+                <b>Wynagrodzenie brutto:</b> {fmtZl(Number(salary))}
               </p>
               <p>
                 <b>Okres pracy:</b> {startYear} - {endYear}
@@ -108,48 +106,56 @@ export default function DashboardPage() {
             </form>
           </div>
 
-          <div className="zus-card">
+          <div className="zus-card no-hover">
             <h3 className="zus-subheader mb-3">Okresy chorobowe</h3>
             <p className="text-sm text-[var(--zus-navy)] mb-3">
               Wprowadź dane dla wybranych lat:
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  placeholder="Rok"
-                  className="zus-input"
-                />
-                <input
-                  type="number"
-                  placeholder="Dni"
-                  className="zus-input"
-                />
+                <input type="number" placeholder="Rok" className="zus-input" />
+                <input type="number" placeholder="Dni" className="zus-input" />
               </div>
               <button className="zus-btn-secondary w-full">Dodaj</button>
             </div>
           </div>
         </aside>
 
-        {/* === PANEL CENTRALNY (WYNIKI + WYKRESY) === */}
         <section
           className="col-span-12 lg:col-span-6 flex flex-col gap-6"
           aria-labelledby="results-title"
         >
-          <div className="zus-card">
+          <div className="zus-card no-hover">
             <h2 id="results-title" className="zus-subheader mb-4">
               Prognoza wysokości emerytury
             </h2>
 
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={lineData}>
-                <XAxis dataKey="year" />
-                <YAxis />
-                <Tooltip formatter={(val: number) => `${val.toFixed(0)} zł`} />
-                <Legend />
+            <ResponsiveContainer width="100%" height={320}>
+              <LineChart data={lineData} margin={{ top: 30, right: 20, left: 10, bottom: 40 }}>
+                <XAxis
+                  dataKey="year"
+                  tickMargin={0}
+                  label={{
+                    value: "Rok",
+                    position: "insideRight",
+                    offset: 0, 
+                    style: { textAnchor: "start", fontSize: 14, fill: "#333" },
+                  }}
+                />
+                <YAxis tickFormatter={(v) => fmt(Number(v))} />
+                <Tooltip
+                  labelFormatter={(label: any) => `Rok ${label}`}
+                  formatter={(val: any, name: any) => [fmtZl(Number(val)), name]}
+                />
+                <Legend
+                  verticalAlign="top"
+                  align="center"
+                  wrapperStyle={{ paddingBottom: 15, marginBottom: 15 }}
+                />
                 <Line
                   type="monotone"
                   dataKey="nominal"
+                  name="Emerytura nominalna"
                   stroke="rgb(63,132,210)"
                   strokeWidth={2}
                   dot={false}
@@ -157,22 +163,23 @@ export default function DashboardPage() {
                 <Line
                   type="monotone"
                   dataKey="real"
+                  name="Emerytura realna (dzisiejsze ceny)"
                   stroke="rgb(0,153,63)"
                   strokeWidth={2}
                   dot={false}
                 />
               </LineChart>
             </ResponsiveContainer>
+
           </div>
 
-          {/* === KARTY PODSUMOWANIA === */}
           <div className="grid grid-cols-2 gap-4">
             <div className="zus-card-hover text-center">
               <h4 className="text-sm text-[var(--zus-navy)] mb-1">
                 Prognozowana emerytura
               </h4>
               <p className="text-2xl font-bold text-[var(--zus-green)]">
-                {result.nominalPension.toFixed(0)} zł
+                {fmt(Number(result.nominalPension))} zł
               </p>
             </div>
             <div className="zus-card-hover text-center">
@@ -180,10 +187,10 @@ export default function DashboardPage() {
                 Urealniona emerytura
               </h4>
               <p className="text-2xl font-bold text-[var(--zus-blue)]">
-                {result.realPension.toFixed(0)} zł
+                {fmt(Number(result.realPension))} zł
               </p>
             </div>
-            <div className="zus-card text-center">
+            <div className="zus-card-hover text-center">
               <h4 className="text-sm text-[var(--zus-navy)] mb-1">
                 Stopa zastąpienia
               </h4>
@@ -191,30 +198,41 @@ export default function DashboardPage() {
                 {(result.replacementRate * 100).toFixed(1)}%
               </p>
             </div>
-            <div className="zus-card text-center">
+            <div className="zus-card-hover text-center">
               <h4 className="text-sm text-[var(--zus-navy)] mb-1">
                 Różnica względem oczekiwań
               </h4>
-              <p className="text-2xl font-bold text-[var(--zus-red)]">
-                -1 200 zł
-              </p>
+              <p className="text-2xl font-bold text-[var(--zus-red)]">-1 200 zł</p>
             </div>
           </div>
 
-          <div className="zus-card">
+          <div className="zus-card no-hover">
             <h3 className="zus-subheader mb-3">
               Wzrost środków na koncie i subkoncie
             </h3>
 
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={320}>
               <LineChart data={lineData}>
-                <XAxis dataKey="year" />
-                <YAxis />
-                <Tooltip formatter={(val: number) => `${val.toFixed(0)} zł`} />
-                <Legend />
+                <XAxis
+                  dataKey="year"
+                  tickMargin={10}
+                  label={{
+                    value: "Rok",
+                    position: "insideRight", // zamiast insideBottom
+                    offset: 20, // odstęp od osi, żeby nie nachodził na liczby
+                    style: { textAnchor: "start", fontSize: 14, fill: "#333" },
+                  }}
+                />
+                <YAxis tickFormatter={(v) => fmt(Number(v))} />
+                <Tooltip
+                  labelFormatter={(label: any) => `Rok ${label}`}
+                  formatter={(val: any, name: any) => [fmtZl(Number(val)), name]}
+                />
+                <Legend verticalAlign="top" height={36} />
                 <Line
                   type="monotone"
                   dataKey="real"
+                  name="Środki w cenach stałych"
                   stroke="rgb(255,179,79)"
                   strokeWidth={2}
                   dot={false}
@@ -224,12 +242,11 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        {/* === PANEL PRAWY (SCENARIUSZE + INDEKSACJA) === */}
         <aside
           className="col-span-12 lg:col-span-3 flex flex-col gap-6"
           aria-labelledby="scenario-title"
         >
-          <div className="zus-card">
+          <div className="zus-card no-hover">
             <h3 id="scenario-title" className="zus-subheader mb-3">
               Scenariusze
             </h3>
@@ -247,7 +264,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="zus-card">
+          <div className="zus-card no-hover">
             <h3 className="zus-subheader mb-3">
               Wskaźnik indeksacji wynagrodzeń
             </h3>
@@ -256,11 +273,7 @@ export default function DashboardPage() {
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  placeholder="Rok"
-                  className="zus-input"
-                />
+                <input type="number" placeholder="Rok" className="zus-input" />
                 <input
                   type="number"
                   placeholder="% wzrostu"
