@@ -1,5 +1,5 @@
 # ZUSim — Symulator Emerytalny  
-**HackYeah 2k25 — UnEmploYed**  
+**HackYeah 2k25 — UnEmploYet**  
 
 > Interaktywny symulator emerytalny (frontend: Vite + React + TypeScript, UI: MUI, backend: .NET/C#).  
 > Raporty PDF/XLS, dashboard, symulacja z uwzględnieniem zwolnień lekarskich, eksporty i prosty monitoring użycia.
@@ -92,7 +92,9 @@ docknet run
 ```
 
 ---
-<img src="ZUSim/screenfull.png" alt="ZUS screenshot" width="100%"/>
+<p align="center">
+  <img src="ZUSim/screenfull.png" alt="ZUS screenshot" width="60%"/>
+</p>
 
 ---
 
@@ -188,4 +190,4 @@ Oznacza to, że możesz:
 - modyfikować, kopiować i rozpowszechniać projekt,  
 - korzystać z projektu bez ograniczeń, pod warunkiem zachowania informacji o autorze i dołączonej licencji.
 
-> MIT License © 2025 UnEmploYed HackYeah
+> MIT License © 2025 UnEmploYet HackYeah
