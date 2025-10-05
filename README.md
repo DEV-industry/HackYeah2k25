@@ -19,8 +19,6 @@
   <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Badge"/>
   <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET Badge"/>
   <img src="https://img.shields.io/badge/Backend-Express.js-white?style=for-the-badge&logo=express&logoColor=black" alt="Express.js Badge"/>
-
-
   <img src="https://img.shields.io/badge/Images-Unsplash-000000?style=for-the-badge&logo=unsplash&logoColor=white" alt="Unsplash Badge"/>
 
 
@@ -99,9 +97,21 @@ docknet run
 ```
 
 ---
-<p align="center">
-  <img src="ZUSim/screenfull.png" alt="ZUS screenshot" width="60%"/>
-</p>
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" valign="middle">
+        <img src="ZUSim/screenfull.png" alt="ZUS screenshot 1" width="45%"/>
+      </td>
+      <td align="center" valign="middle">
+        <img src="ZUSim/screenfull-2.png" alt="ZUS screenshot 2" width="45%"/>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+
 
 ---
 
