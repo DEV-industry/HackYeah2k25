@@ -151,7 +151,7 @@ return (
           className="border-2 border-border bg-card/50 backdrop-blur-sm"
           data-testid="card-postal"
         >
-          <CardContent className="p-6 flex flex-col items-center justify-center min-h-[140px] gap-3">
+          <CardContent className="p-6 flex flex-col items-start justify-center min-h-[140px] gap-3">
             <Label className="text-lg font-bold text-foreground">
               Kod pocztowy
             </Label>
