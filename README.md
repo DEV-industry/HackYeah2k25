@@ -6,7 +6,8 @@
 
 ---
 
-![ZUS Logo](ZUSim/client/src/components/logo-zus.png) ![HackYeah 2k25](./assets/logo-hackyeah-2k25.png)
+<img src="ZUSim/client/src/components/logo-zus.png" alt="ZUS Logo" width="350"/>
+<img src="ZUSim/client/src/components/lemur.jpg" alt="lemur Logo" width="150"/>
 
 ---
 
