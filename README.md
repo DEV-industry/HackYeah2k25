@@ -1,7 +1,7 @@
 # ZUSim — Symulator Emerytalny  
 **HackYeah 2k25 — UnEmploYed**  
 
-> Interaktywny symulator emerytalny (frontend: Vite + React + TypeScript, UI: MUI + shadcn components, backend: .NET/C#).  
+> Interaktywny symulator emerytalny (frontend: Vite + React + TypeScript, UI: MUI, backend: .NET/C#).  
 > Raporty PDF/XLS, dashboard, symulacja z uwzględnieniem zwolnień lekarskich, eksporty i prosty monitoring użycia.
 
 ---
