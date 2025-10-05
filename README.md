@@ -12,6 +12,14 @@
     <td><img src="ZUSim/client/src/components/lemur.jpg" alt="Lemur Logo" width="150"/></td>
   </tr>
 </table>
+<p>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Badge"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript Badge"/>
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Badge"/>
+  <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET Badge"/>
+  <img src="https://img.shields.io/github/stars/DEV-industry/HackYeah2k25?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Stars"/>
+
+</p>
 
 
 
