@@ -136,9 +136,10 @@ export default function DashboardPage() {
   const [scenarioName, setScenarioName] = useState("Scenariusz 1");
   const [showScenariosOnMain, setShowScenariosOnMain] = useState(false);
 
-  const [sickYear, setSickYear] = useState<number | "">("");
+  // surowe wartości pól roku – string, żeby nie psuć wpisywania
+  const [sickYearRaw, setSickYearRaw] = useState<string>("");
   const [sickDays, setSickDays] = useState<number | "">("");
-  const [wageYear, setWageYear] = useState<number | "">("");
+  const [wageYearRaw, setWageYearRaw] = useState<string>("");
   const [wagePct, setWagePct] = useState<number | "">("");
 
   if (!simulationData) {
@@ -218,60 +219,69 @@ export default function DashboardPage() {
     []
   );
 
+  const clampYear = (y: number) =>
+    Math.max(Number(startYear), Math.min(Number(endYear), y));
+
   const addSick = () => {
-    if (sickYear === "" || sickDays === "") return;
-    const y = Math.max(Number(startYear), Number(sickYear));
+    if (!sickYearRaw || sickDays === "") return;
+    const parsed = parseInt(sickYearRaw, 10);
+    if (Number.isNaN(parsed)) return;
+    const y = clampYear(parsed);
     const d = Math.max(0, Math.min(365, Number(sickDays)));
     setSick((prev) => {
       const filtered = prev.filter((e) => e.year !== y);
       return [...filtered, { year: y, days: d }].sort((a, b) => a.year - b.year);
     });
-    setSickYear("");
+    setSickYearRaw("");
     setSickDays("");
   };
 
   const addWage = () => {
-    if (wageYear === "" || wagePct === "") return;
-    const y = Math.max(Number(startYear), Number(wageYear));
+    if (!wageYearRaw || wagePct === "") return;
+    const parsed = parseInt(wageYearRaw, 10);
+    if (Number.isNaN(parsed)) return;
+    const y = clampYear(parsed);
     const p = Math.max(0, Number(wagePct));
     setWage((prev) => {
       const filtered = prev.filter((e) => e.year !== y);
       return [...filtered, { year: y, pct: p }].sort((a, b) => a.year - b.year);
     });
-    setWageYear("");
+    setWageYearRaw("");
     setWagePct("");
   };
 
+  const [scenariosState, setScenariosState] = useState<Scenario[]>([]);
+  const scenariosUI = scenariosState.length ? scenariosState : scenarios;
   const saveScenario = () => {
-    if (scenarios.length >= 10) return;
+    if (scenariosUI.length >= 10) return;
     const id = `${Date.now()}`;
     const sc: Scenario = {
       id,
-      name: scenarioName || `Scenariusz ${scenarios.length + 1}`,
+      name: scenarioName || `Scenariusz ${scenariosUI.length + 1}`,
       sick: [...sick],
       wage: [...wage],
       lineData: lineData,
-      color: SC_COLORS[scenarios.length % SC_COLORS.length],
+      color: SC_COLORS[scenariosUI.length % SC_COLORS.length],
     };
-    setScenarios((s) => [...s, sc]);
-    setScenarioName(`Scenariusz ${scenarios.length + 2}`);
+    setScenariosState((s) => [...s, sc]);
+    setScenarioName(`Scenariusz ${scenariosUI.length + 2}`);
   };
 
   const clearScenario = (id: string) => {
-    setScenarios((s) => s.filter((x) => x.id !== id));
+    setScenariosState((s) => s.filter((x) => x.id !== id));
   };
 
   const overlays = useMemo(
     () =>
       showScenariosOnMain
-        ? scenarios.slice(0, 5).map((s) => ({
+        ? scenariosUI.slice(0, 5).map((s) => ({
             id: s.id,
             name: s.name,
             color: s.color,
             data: s.lineData,
           }))
         : undefined,
-    [showScenariosOnMain, scenarios]
+    [showScenariosOnMain, scenariosUI]
   );
 
   return (
@@ -294,15 +304,12 @@ export default function DashboardPage() {
             <p className="text-sm text-[var(--zus-navy)] mb-3">Dodaj dni chorobowe dla lat.</p>
             <div className="flex items-center gap-2 mb-2">
               <input
-                type="number"
-                placeholder="Rok"
+                type="text"
+                inputMode="numeric"
+                placeholder="Rok (np. 2035)"
                 className="zus-input"
-                min={startYear}
-                value={sickYear}
-                onChange={(e) => {
-                  const v = e.target.value ? Number(e.target.value) : "";
-                  setSickYear(v === "" ? "" : Math.max(Number(startYear), v));
-                }}
+                value={sickYearRaw}
+                onChange={(e) => setSickYearRaw(e.target.value.replace(/[^\d]/g, "").slice(0, 4))}
               />
               <input
                 type="number"
@@ -319,8 +326,12 @@ export default function DashboardPage() {
               />
             </div>
             <div className="flex gap-2">
-              <button type="button" className="zus-btn-secondary w-full" onClick={addSick}>Dodaj</button>
-              <button type="button" className="zus-btn-primary w-full" onClick={() => setSick([])}>Wyczyść</button>
+              <button type="button" className="zus-btn-secondary w-full" onClick={addSick}>
+                Dodaj
+              </button>
+              <button type="button" className="zus-btn-primary w-full" onClick={() => { setSick([]); }}>
+                Wyczyść
+              </button>
             </div>
             {sick.length > 0 && (
               <ul className="mt-3 text-sm text-[var(--zus-navy)]">
@@ -373,7 +384,7 @@ export default function DashboardPage() {
 
           <div className="zus-card no-hover">
             <h3 className="zus-subheader mb-3">Wzrost środków na koncie i subkoncie</h3>
-            <Chart data={lineData} lines={fundsLines} />
+            <Chart data={lineData} lines={ [{ key: "real" as const, name: "Środki w cenach stałych", color: "rgb(255,179,79)" }] } />
           </div>
         </section>
 
@@ -389,21 +400,21 @@ export default function DashboardPage() {
             />
             <div className="flex flex-col gap-2">
               <button
-                className={`zus-btn-primary w-full ${scenarios.length >= 10 ? "opacity-60 cursor-not-allowed" : ""}`}
+                className={`zus-btn-primary w-full ${scenariosUI.length >= 10 ? "opacity-60 cursor-not-allowed" : ""}`}
                 onClick={saveScenario}
-                disabled={scenarios.length >= 10}
-                title={scenarios.length >= 10 ? "Maksymalnie 10 scenariuszy" : ""}
+                disabled={scenariosUI.length >= 10}
+                title={scenariosUI.length >= 10 ? "Maksymalnie 10 scenariuszy" : ""}
               >
-                Zapisz scenariusz <br/> (bieżące dane)
+                Zapisz scenariusz (bieżące dane)
               </button>
             </div>
 
-            {scenarios.length > 0 && (
+            {scenariosUI.length > 0 && (
               <div className="mt-3">
                 <p className="text-sm font-semibold text-[var(--zus-navy)] mb-2">Porównanie:</p>
-                <ScenariosChart scenarios={scenarios} />
+                <ScenariosChart scenarios={scenariosUI} />
                 <ul className="mt-2 text-sm space-y-1">
-                  {scenarios.map((s) => (
+                  {scenariosUI.map((s) => (
                     <li key={s.id} className="flex items-center justify-between">
                       <span className="flex items-center gap-2">
                         <span
@@ -435,15 +446,12 @@ export default function DashboardPage() {
             </p>
             <div className="flex items-center gap-2 mb-2">
               <input
-                type="number"
-                placeholder="Rok"
+                type="text"
+                inputMode="numeric"
+                placeholder="Rok (np. 2035)"
                 className="zus-input"
-                min={startYear}
-                value={wageYear}
-                onChange={(e) => {
-                  const v = e.target.value ? Number(e.target.value) : "";
-                  setWageYear(v === "" ? "" : Math.max(Number(startYear), v));
-                }}
+                value={wageYearRaw}
+                onChange={(e) => setWageYearRaw(e.target.value.replace(/[^\d]/g, "").slice(0, 4))}
               />
               <input
                 type="number"

@@ -9,14 +9,33 @@ import DashboardPage from "@/pages/DashboardPage";
 import ZUSHeader from "./components/ZUSHeader";
 import { SimulationProvider } from "../src/context/SimulationContext";
 import Footer from "./components/Footer";
+import { useLocation } from "wouter";
+import { useEffect } from "react";
+
+function ScrollManager() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location]);
+
+  return null;
+}
 
 function Router() {
   return (
+    <>
+    <ScrollManager />
     <Switch>
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/" component={Home} />
       <Route component={NotFound} />
     </Switch>
+    </>
   );
 }
 
