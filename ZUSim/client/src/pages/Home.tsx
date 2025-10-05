@@ -96,6 +96,7 @@ export default function Home() {
           sx={{
             height: { xs: 'auto', md: '50vh' },
             minHeight: { xs: '250px', md: '300px' },
+            maxHeight: '500px',
             bgcolor: 'rgb(250, 250, 250)',
             borderRadius: 2,
             my: 2,
