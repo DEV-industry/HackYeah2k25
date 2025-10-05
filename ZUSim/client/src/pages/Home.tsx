@@ -90,38 +90,42 @@ export default function Home() {
           flex: 1, // wypełnia przestrzeń
         }}
       >
-        {/* Input Section */}
-<Box
-  sx={{
-    height: { xs: 'auto', md: '40vh' },
-    minHeight: { xs: '200px', md: '250px' },
-    my: 2,
-    borderRadius: 2,
-    backgroundImage: 'url("https://images.unsplash.com/photo-1574376407492-c3cf78231def?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}
->
-  <Box
-    sx={{
-      width: '99%',
-      backdropFilter: 'blur(5px)',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
-      borderRadius: 2,
-      p: 3,
-    }}
-  >
-    <PensionInputSection
-      desiredPension={desiredPension}
-      onDesiredPensionChange={setDesiredPension}
-      averagePension={averagePension}
-    />
-  </Box>
-</Box>
+
+      {/* Input Section */}
+      <Box className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]"
+      sx={{
+        overflowX: 'clip',
+        backgroundImage:
+          'url("https://images.unsplash.com/photo-1574376407492-c3cf78231def?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        py: { xs: 3, md: 6 },
+        mt: { xs: 2, md: 3 },
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: '1100px',
+          mx: 'auto',
+          boxSizing: 'border-box',
+          backdropFilter: 'blur(5px)',
+          backgroundColor: 'rgba(255,255,255,0.85)',
+          borderRadius: 2,
+          px: { xs: 3, sm: 3, md: 4 },
+          py: { xs: 3, md: 4 },
+        }}
+      >
+        <PensionInputSection
+          desiredPension={desiredPension}
+          onDesiredPensionChange={setDesiredPension}
+          averagePension={averagePension}
+        />
+      </Box>
+    </Box>
+
+
 
 
         {/* Distribution Chart */}
@@ -130,7 +134,6 @@ export default function Home() {
             height: { xs: 'auto', md: '50vh' },
             minHeight: { xs: '250px', md: '300px' },
             bgcolor: 'rgb(250, 250, 250)',
-            p: 2,
             borderRadius: 2,
             my: 2,
           }}
@@ -142,8 +145,11 @@ export default function Home() {
         <Box
           sx={{
             my: 2,
-            p: 2,
+            borderRadius: '5px',
+            overflow: 'hidden',
+            bgcolor: 'background.paper',
           }}
+          style={{ borderRadius: '5px' }}
         >
           <RandomFactBanner facts={pensionFacts} />
           <Box sx={{ mt: 2 }}>
