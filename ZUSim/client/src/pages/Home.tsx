@@ -41,6 +41,7 @@ export default function Home() {
         flexDirection: 'column',
         minHeight: '100vh',
         bgcolor: 'white',
+        overflowX: 'hidden',
       }}
       data-testid="page-home"
     >
