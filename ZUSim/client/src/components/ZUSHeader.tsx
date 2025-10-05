@@ -24,8 +24,9 @@ export default function ZUSHeader() {
               <img
                 src={LogoZus}
                 alt="ZUS - Zakład Ubezpieczeń Społecznych"
-                className="h-12 object-contain flex-shrink-0"
+                className="h-12 object-contain flex-shrink-0 cursor-pointer"
                 data-testid="img-zus-logo"
+                onClick={() => (window.location.href = '/')}
               />
             </div>
           </div>
