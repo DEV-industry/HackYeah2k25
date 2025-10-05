@@ -16,7 +16,11 @@ export default function PensionDistributionChart({ groups }: PensionDistribution
         px: 4,
         py: 3,
         height: '100%',
-        overflow: 'hidden',
+        width: '100%',
+        maxWidth: '1100px', // 🔹 ograniczenie szerokości
+        margin: '0 auto',    // 🔹 wycentrowanie w stronie
+        overflow: 'hidden',  // 🔹 zapobiega wychodzeniu elementów poza kontener
+        userSelect: 'none',  // 🔹 blokuje niechciane zaznaczanie przy zoom
       }}
     >
       {/* 🔹 Watermark w tle */}
@@ -93,6 +97,7 @@ export default function PensionDistributionChart({ groups }: PensionDistribution
                     flexDirection: 'column',
                     alignItems: 'center',
                     cursor: 'pointer',
+                    flexShrink: 0, // 🔹 zapobiega niekontrolowanemu rozciąganiu
                     transition: 'transform 0.2s ease-in-out',
                     '&:hover': {
                       transform: 'translateY(-4px)',
@@ -103,9 +108,10 @@ export default function PensionDistributionChart({ groups }: PensionDistribution
                     sx={{
                       width: '100%',
                       height: `${heightPercentage}px`,
+                      minHeight: '40px',
+                      maxHeight: '200px', // 🔹 ogranicza rozciąganie przy zoom
                       bgcolor: group.color,
                       borderRadius: '4px 4px 0 0',
-                      minHeight: '40px',
                       display: 'flex',
                       alignItems: 'flex-start',
                       justifyContent: 'center',
@@ -119,6 +125,7 @@ export default function PensionDistributionChart({ groups }: PensionDistribution
                         fontWeight: 700,
                         fontSize: '0.875rem',
                         textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                        textAlign: 'center',
                       }}
                     >
                       {group.amount.toLocaleString('pl-PL')} zł
