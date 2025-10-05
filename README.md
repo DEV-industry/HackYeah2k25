@@ -6,8 +6,15 @@
 
 ---
 
-<img src="ZUSim/client/src/components/logo-zus.png" alt="ZUS Logo" width="350"/>
-<img src="ZUSim/client/src/components/lemur.jpg" alt="lemur Logo" width="150"/>
+<table>
+  <tr>
+    <td><img src="ZUSim/client/src/components/logo-zus.png" alt="ZUS Logo" width="350"/></td>
+    <td><img src="ZUSim/client/src/components/lemur.jpg" alt="Lemur Logo" width="150"/></td>
+  </tr>
+</table>
+
+
+
 
 ---
 
