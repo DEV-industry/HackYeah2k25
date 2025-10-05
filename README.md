@@ -93,7 +93,7 @@ npm run dev           # server: (http://127.0.0.1:5000)
 ```bash
 cd ZUSim-backend
 npm install       
-docknet run           
+dotnet run           
 ```
 
 ---
